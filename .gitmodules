@@ -7,3 +7,6 @@
 [submodule "plugins/nxhtml"]
 	path = plugins/nxhtml
 	url = git://github.com/jwiegley/nxhtml.git
+[submodule "plugins/html5-el"]
+	path = plugins/html5-el
+	url = git://github.com/hober/html5-el.git

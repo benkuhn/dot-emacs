@@ -3,6 +3,7 @@
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-h" 'backward-delete-char)
+(global-set-key (kbd "\C-x r S") 'string-insert-rectangle)
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
 
@@ -62,7 +63,7 @@ If point was already at that position, move point to beginning of line."
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
-(yas/load-directory "~/.emacs.d/my-yasnippets/")
+(yas/load-directory "~/.emacs.d/snippets/")
 ;;;
 ;(add-to-list 'load-path "~/.emacs.d/plugins/misc")
 ;(autoload 'notify "notify" "Notify TITLE, BODY.")
@@ -87,7 +88,8 @@ If point was already at that position, move point to beginning of line."
   '((c-offsets-alist . ((substatement-open . 0) (case-label . +)))))
 (add-hook 'c-mode-common-hook
   '(lambda ()
-	 (c-add-style "cs50" cs50-c-style)))
+     (c-toggle-hungry-state 1)
+     (c-add-style "cs50" cs50-c-style)))
 (set-variable 'c-default-style "cs50")
 
 ;;; stored usernames/passwords
@@ -113,3 +115,34 @@ If point was already at that position, move point to beginning of line."
 (add-hook 'auto-save-hook 'my-desktop-save)
 
 (load "~/.emacs.d/plugins/nxhtml/autostart.el")
+;; HTML5
+(add-to-list 'load-path "~/.emacs.d/plugins/html5-el/")
+(eval-after-load "rng-loc"
+  '(add-to-list 'rng-schema-locating-files "~/.emacs.d/plugins/html5-el/schemas.xml"))
+(require 'whattf-dt)
+
+;;; function to rotate a list of strings
+(defun permute-strings (args)
+  (interactive (list (get-permute-args 1)))
+  (save-excursion
+    (save-restriction
+      (narrow-to-region (point) (mark))
+      (beginning-of-buffer)
+      (replace-string (car args) "__TMP__")
+      (let ((end (permute-strings-helper args)))
+        (beginning-of-buffer)
+        (replace-string "__TMP__" end)))))
+
+(defun permute-strings-helper (args)
+  (if (cadr args)
+      (progn
+        (beginning-of-buffer)
+        (replace-string (cadr args) (car args))
+        (permute-strings-helper (cdr args)))
+    (car args)))
+
+(defun get-permute-args (num)
+  (let ((arg (read-string "String to permute: " nil 'my-history)))
+    (if (string= arg "")
+        nil
+      (cons arg (get-permute-args (+ num 1))))))

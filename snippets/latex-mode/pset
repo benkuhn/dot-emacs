@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: pset
+# key: pset
+# --
+\documentclass[12pt]{article}
+\title{${1:`(if (string-match ".*/\\\([^/]+\\\)/ps\\\(.\\\).*" (buffer-file-name)) (replace-match "\\\1 problem set \\\2" nil nil (buffer-file-name)) (buffer-file-name))`}}
+\author{Ben Kuhn}
+\date{`(format-time-string "%B %e, %Y")`}
+\usepackage{pset}
+
+\begin{document}
+\psetpart{$2}{$3}
+
+\problem{1}
+
+$0
+
+\end{document}
