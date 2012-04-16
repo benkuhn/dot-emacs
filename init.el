@@ -68,6 +68,7 @@ If point was already at that position, move point to beginning of line."
 ;(add-to-list 'load-path "~/.emacs.d/plugins/misc")
 ;(autoload 'notify "notify" "Notify TITLE, BODY.")
 ;;; haskell mode
+(add-to-list 'load-path "~/.emacs.d/plugins/haskell-mode")
 (load "~/.emacs.d/plugins/haskell-mode/haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)

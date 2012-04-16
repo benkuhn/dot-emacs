@@ -10,3 +10,6 @@
 [submodule "plugins/html5-el"]
 	path = plugins/html5-el
 	url = git://github.com/hober/html5-el.git
+[submodule "plugins/tuareg-mode"]
+	path = plugins/tuareg-mode
+	url = git://anonscm.debian.org/pkg-ocaml-maint/packages/tuareg-mode.git
