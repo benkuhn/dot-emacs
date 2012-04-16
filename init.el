@@ -75,6 +75,20 @@ If point was already at that position, move point to beginning of line."
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
+;;; Tuareg mode (OCaml)
+(add-to-list 'load-path "~/.emacs.d/plugins/tuareg-mode")
+(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
+(autoload 'tuareg-imenu-set-imenu "tuareg-imenu" 
+  "Configuration of imenu for tuareg" t)
+;;; this is broken for me
+;;(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
+(setq auto-mode-alist 
+      (append '(("\\.ml[ily]?$" . tuareg-mode)
+                ("\\.topml$" . tuareg-mode))
+              auto-mode-alist))
+
+
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (setq inhibit-startup-message t)
 (put 'narrow-to-region 'disabled nil)
