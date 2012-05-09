@@ -13,3 +13,6 @@
 [submodule "plugins/tuareg-mode"]
 	path = plugins/tuareg-mode
 	url = git://anonscm.debian.org/pkg-ocaml-maint/packages/tuareg-mode.git
+[submodule "plugins/coffee-mode"]
+	path = plugins/coffee-mode
+	url = https://github.com/defunkt/coffee-mode.git
