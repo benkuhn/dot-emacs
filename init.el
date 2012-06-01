@@ -87,8 +87,17 @@ If point was already at that position, move point to beginning of line."
       (append '(("\\.ml[ily]?$" . tuareg-mode)
                 ("\\.topml$" . tuareg-mode))
               auto-mode-alist))
+;;; CoffeeScript
+(add-to-list 'load-path "~/.emacs.d/plugins/coffee-mode")
+(require 'coffee-mode)
+;;2-space tabs
+(defun coffee-custom ()
+  "coffee-mode-hook"
+ (set (make-local-variable 'tab-width) 2))
+(add-hook 'coffee-mode-hook
+  '(lambda() (coffee-custom)))
 
-
+;;; for LaTeX: auto-refresh PDF buffers
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (setq inhibit-startup-message t)
 (put 'narrow-to-region 'disabled nil)
@@ -114,7 +123,8 @@ If point was already at that position, move point to beginning of line."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/Documents/org/classes.org"))))
+ '(org-agenda-files (quote ("~/Documents/org/classes.org")))
+ '(warning-minimum-level :error))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
