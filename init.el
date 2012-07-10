@@ -57,6 +57,11 @@ If point was already at that position, move point to beginning of line."
 ;;; bells and whistles
 (iswitchb-mode)
 (desktop-save-mode 1)
+(linum-mode)
+(require 'uniquify) 
+(setq 
+  uniquify-buffer-name-style 'post-forward
+  uniquify-separator ":")
 ;(setq mouse-autoselect-window t)
 ;;; YASnippet
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
@@ -74,6 +79,10 @@ If point was already at that position, move point to beginning of line."
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+;;; SCSS mode
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/scss-mode"))
+(autoload 'scss-mode "scss-mode")
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
 ;;; Tuareg mode (OCaml)
 (add-to-list 'load-path "~/.emacs.d/plugins/tuareg-mode")
@@ -92,11 +101,15 @@ If point was already at that position, move point to beginning of line."
 (require 'coffee-mode)
 ;;2-space tabs
 (defun coffee-custom ()
-  "coffee-mode-hook"
- (set (make-local-variable 'tab-width) 2))
-(add-hook 'coffee-mode-hook
-  '(lambda() (coffee-custom)))
-
+  "hook run for coffee-mode"
+  (local-set-key "\C-j" 'coffee-newline-and-indent))
+(add-hook 'coffee-mode-hook 'coffee-custom)
+;;; LilyPond
+(add-to-list 'load-path "~/.emacs.d/plugins/lilypond-mode/")
+(autoload 'LilyPond-mode "lilypond-mode" "LilyPond Editing Mode" t)
+(add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
+(add-to-list 'auto-mode-alist '("\\.ily$" . LilyPond-mode))
+(add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
 ;;; for LaTeX: auto-refresh PDF buffers
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (setq inhibit-startup-message t)
@@ -123,7 +136,9 @@ If point was already at that position, move point to beginning of line."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(coffee-tab-width 2)
  '(org-agenda-files (quote ("~/Documents/org/classes.org")))
+ '(tab-width 4)
  '(warning-minimum-level :error))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
