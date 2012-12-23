@@ -109,6 +109,7 @@ If point was already at that position, move point to beginning of line."
 (add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
 (add-to-list 'auto-mode-alist '("\\.ily$" . LilyPond-mode))
 (add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
+
 ;;; for LaTeX: auto-refresh PDF buffers
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 (setq inhibit-startup-message t)
