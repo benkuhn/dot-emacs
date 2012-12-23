@@ -57,8 +57,6 @@ If point was already at that position, move point to beginning of line."
 ;;; bells and whistles
 (iswitchb-mode)
 (desktop-save-mode 1)
-(linum-on)
-(add-hook 'after-change-major-mode-hook 'linum-on)
 (require 'uniquify) 
 (setq 
   uniquify-buffer-name-style 'post-forward
