@@ -23,9 +23,19 @@ If point was already at that position, move point to beginning of line."
 
 ;;; GUI is evil
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'blink-cursor-mode) (blink-cursor-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(column-number-mode 1)
+
+(require 'smooth-scrolling)
+(require 'linum)
+(global-linum-mode)
+
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+(add-hook 'text-mode-hook
+          (lambda ()
+            (linum-mode -1)))
 
 ;;; make eshell notify after long commands
 ;; (setq eshell-notification-wait 5)
@@ -57,20 +67,23 @@ If point was already at that position, move point to beginning of line."
 ;;; bells and whistles
 (iswitchb-mode)
 (desktop-save-mode 1)
-(require 'uniquify) 
-(setq 
+(require 'uniquify)
+(setq
   uniquify-buffer-name-style 'post-forward
   uniquify-separator ":")
 ;(setq mouse-autoselect-window t)
+
 ;;; YASnippet
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
 (yas/load-directory "~/.emacs.d/snippets/")
+
 ;;;
 ;(add-to-list 'load-path "~/.emacs.d/plugins/misc")
 ;(autoload 'notify "notify" "Notify TITLE, BODY.")
+
 ;;; haskell mode
 (add-to-list 'load-path "~/.emacs.d/plugins/haskell-mode")
 (load "~/.emacs.d/plugins/haskell-mode/haskell-site-file")
@@ -78,23 +91,26 @@ If point was already at that position, move point to beginning of line."
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+
 ;;; SCSS mode
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/scss-mode"))
 (autoload 'scss-mode "scss-mode")
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
 ;;; Tuareg mode (OCaml)
-(add-to-list 'load-path "~/.emacs.d/plugins/tuareg-mode")
-(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
-(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
-(autoload 'tuareg-imenu-set-imenu "tuareg-imenu" 
-  "Configuration of imenu for tuareg" t)
-;;; this is broken for me
-;;(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
-(setq auto-mode-alist 
-      (append '(("\\.ml[ily]?$" . tuareg-mode)
-                ("\\.topml$" . tuareg-mode))
-              auto-mode-alist))
+(if (not (boundp 'JANESTREET))
+    (add-to-list 'load-path "~/.emacs.d/plugins/tuareg-mode")
+  (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+  (autoload 'camldebug "camldebug" "Run the Caml debugger" t)
+  (autoload 'tuareg-imenu-set-imenu "tuareg-imenu"
+    "Configuration of imenu for tuareg" t)
+  ;;; this is broken for me
+  ;;(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
+  (setq auto-mode-alist
+        (append '(("\\.ml[ily]?$" . tuareg-mode)
+                  ("\\.topml$" . tuareg-mode))
+                auto-mode-alist)))
+
 ;;; CoffeeScript
 (add-to-list 'load-path "~/.emacs.d/plugins/coffee-mode")
 (require 'coffee-mode)
@@ -136,6 +152,10 @@ If point was already at that position, move point to beginning of line."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(make-backup-files nil)
+ '(auto-save-default nil)
+ '(smooth-scroll-margin 10)
+ '(isearch-allow-scroll t)
  '(coffee-tab-width 2)
  '(org-agenda-files (quote ("~/Documents/org/classes.org")))
  '(tab-width 4)
