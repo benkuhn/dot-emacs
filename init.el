@@ -73,6 +73,26 @@ If point was already at that position, move point to beginning of line."
   uniquify-separator ":")
 ;(setq mouse-autoselect-window t)
 
+;;; nicer dired
+(add-hook 'dired-mode-hook
+          (function (lambda ()
+                      (require 'dired-x)
+                      (dired-omit-mode 1)
+                      )))
+(setq dired-guess-shell-alist-default nil)
+;; Don't show junk in dired
+(setq dired-omit-extensions
+      '(
+        "#" ".DS_Store" ".a" ".annot" ".aux" ".bbl" ".bbl" ".blg"
+        ".blg" ".brf" ".byte" ".class" ".cma" ".cmi" ".cmo" ".cmt"
+        ".cmti" ".cmx" ".cmxa" ".deps" ".dvi" ".elc" ".glo" ".glob"
+        ".gls" ".hc" ".hi" ".hp" ".hva" ".idx" ".ilg" ".ind" ".ist"
+        ".libdeps" ".lo" ".loa" ".loe" ".lof" ".lot" ".ml.d" ".mli.d"
+        ".native" ".nav" ".o" ".objdeps" ".omc" ".pdfsync" ".rel"
+        ".snm" ".so" ".spit" ".spot" ".synctex.gz" ".toc" ".v.d" ".vo"
+        ".vrb" "~" "hgignore.in" ".build_info.c" ".hg_version.c"
+        ))
+
 ;;; YASnippet
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 (require 'yasnippet)
@@ -159,7 +179,32 @@ If point was already at that position, move point to beginning of line."
  '(coffee-tab-width 2)
  '(org-agenda-files (quote ("~/Documents/org/classes.org")))
  '(tab-width 4)
- '(warning-minimum-level :error))
+ '(warning-minimum-level :error)
+ '(dired-enable-local-variables nil)
+ '(dired-recursive-copies 'always)
+ '(dired-recursive-deletes 'top)
+ '(dired-omit-size-limit nil)
+ '(dired-guess-shell-alist-user
+   (list
+    (list "\\.tar.bz2\\'" "tar -xjf" "bunzip2")
+    (list "\\.tar.gz\\'" "tar -xzf" "gunzip")
+    (list "\\.bz2\\'" "bunzip2")
+    (list "\\.bzip\\'" "bunzip2")
+    (list "\\.dvi\\'" "dvi2pdf")
+    (list "\\.gz\\'" "gunzip")
+    (list "\\.pdf\\'" "acroread")
+    (list "\\.ps\\'" "ps2pdf")
+    (list "\\.tar\\'" "tar -xf")
+    (list "\\.tbz\\'" "tar -xjf")
+    (list "\\.tgz\\'" "tar -xzf" "gunzip")
+    (list "\\.Z\\'" "unzip")
+    (list "\\.zip\\'" "unzip")
+    )
+   )
+ ;; Make autocomplete ignore these files also
+ '(completion-ignored-extensions dired-omit-extensions)
+ '(dired-omit-files "^\\..*$")
+ )
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
