@@ -3,6 +3,7 @@
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-h" 'backward-delete-char)
+(global-set-key "\C-x\C-r" 'replace-string)
 (global-set-key (kbd "\C-x r S") 'string-insert-rectangle)
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
@@ -28,7 +29,7 @@ If point was already at that position, move point to beginning of line."
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (column-number-mode 1)
 
-(require 'smooth-scrolling)
+;; (require 'smooth-scrolling)
 (require 'linum)
 (global-linum-mode)
 
@@ -65,7 +66,7 @@ If point was already at that position, move point to beginning of line."
 
 
 ;;; bells and whistles
-(iswitchb-mode)
+(ido-mode)
 (desktop-save-mode 1)
 (require 'uniquify)
 (setq
@@ -93,58 +94,26 @@ If point was already at that position, move point to beginning of line."
         ".vrb" "~" "hgignore.in" ".build_info.c" ".hg_version.c"
         ))
 
-;;; YASnippet
-(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
-(require 'yasnippet)
-(yas--initialize)
-(yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
-(yas/load-directory "~/.emacs.d/snippets/")
-
 ;;;
 ;(add-to-list 'load-path "~/.emacs.d/plugins/misc")
 ;(autoload 'notify "notify" "Notify TITLE, BODY.")
 
-;;; haskell mode
-(add-to-list 'load-path "~/.emacs.d/plugins/haskell-mode")
-(load "~/.emacs.d/plugins/haskell-mode/haskell-site-file")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-
 ;;; SCSS mode
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/scss-mode"))
-(autoload 'scss-mode "scss-mode")
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/scss-mode"))
+;; (autoload 'scss-mode "scss-mode")
+;; (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
-;;; Tuareg mode (OCaml)
-(if (not (boundp 'JANESTREET))
-    (add-to-list 'load-path "~/.emacs.d/plugins/tuareg-mode")
-  (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
-  (autoload 'camldebug "camldebug" "Run the Caml debugger" t)
-  (autoload 'tuareg-imenu-set-imenu "tuareg-imenu"
-    "Configuration of imenu for tuareg" t)
-  ;;; this is broken for me
-  ;;(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
-  (setq auto-mode-alist
-        (append '(("\\.ml[ily]?$" . tuareg-mode)
-                  ("\\.topml$" . tuareg-mode))
-                auto-mode-alist)))
-
-;;; CoffeeScript
-(add-to-list 'load-path "~/.emacs.d/plugins/coffee-mode")
-(require 'coffee-mode)
 ;;2-space tabs
 (defun coffee-custom ()
   "hook run for coffee-mode"
   (local-set-key "\C-j" 'coffee-newline-and-indent))
 (add-hook 'coffee-mode-hook 'coffee-custom)
 ;;; LilyPond
-(add-to-list 'load-path "~/.emacs.d/plugins/lilypond-mode/")
-(autoload 'LilyPond-mode "lilypond-mode" "LilyPond Editing Mode" t)
-(add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
-(add-to-list 'auto-mode-alist '("\\.ily$" . LilyPond-mode))
-(add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
+;; (add-to-list 'load-path "~/.emacs.d/plugins/lilypond-mode/")
+;; (autoload 'LilyPond-mode "lilypond-mode" "LilyPond Editing Mode" t)
+;; (add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
+;; (add-to-list 'auto-mode-alist '("\\.ily$" . LilyPond-mode))
+;; (add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
 
 ;;; for LaTeX: auto-refresh PDF buffers
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
@@ -172,12 +141,18 @@ If point was already at that position, move point to beginning of line."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(LilyPond-command-alist (quote (("LilyPond" "lilypond %s" "%s" "%l"
- "View") ("2PS" "lilypond -f ps %s" "%s" "%p" "ViewPS") ("2Gnome"
- "lilypond -b gnome %s") ("Book" "lilypond-book %x" "%x" "%l" "LaTeX")
- ("LaTeX" "latex '\\nonstopmode\\input %l'" "%l" "%d" "ViewDVI")
- ("View" "xdg-open %f") ("ViewPDF" "xdg-open %f") ("ViewPS" "gv
- --watch %p") ("Midi" "") ("MidiAll" ""))))
+ '(LilyPond-command-alist
+   (quote
+    (("LilyPond" "lilypond %s" "%s" "%l" "View")
+     ("2PS" "lilypond -f ps %s" "%s" "%p" "ViewPS")
+     ("2Gnome" "lilypond -b gnome %s")
+     ("Book" "lilypond-book %x" "%x" "%l" "LaTeX")
+     ("LaTeX" "latex '\\nonstopmode\\input %l'" "%l" "%d" "ViewDVI")
+     ("View" "xdg-open %f")
+     ("ViewPDF" "xdg-open %f")
+     ("ViewPS" "gv --watch %p")
+     ("Midi" "")
+     ("MidiAll" ""))))
  '(make-backup-files nil)
  '(auto-save-default nil)
  '(smooth-scroll-margin 10)
@@ -218,7 +193,20 @@ If point was already at that position, move point to beginning of line."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "Consolas")))))
+ '(default ((t (:inherit nil
+                :stipple nil
+                :background "white"
+                :foreground "black"
+                :inverse-video nil
+                :box nil :strike-through nil
+                :overline nil
+                :underline nil
+                :slant normal
+                :weight normal
+                :height 110
+                :width normal
+                :foundry "unknown"
+                :family "Consolas")))))
 
 (defun my-desktop-save ()
   (interactive)
@@ -227,12 +215,12 @@ If point was already at that position, move point to beginning of line."
       (desktop-save desktop-dirname)))
 (add-hook 'auto-save-hook 'my-desktop-save)
 
-(load "~/.emacs.d/plugins/nxhtml/autostart.el")
+;; (load "~/.emacs.d/plugins/nxhtml/autostart.el")
 ;; HTML5
-(add-to-list 'load-path "~/.emacs.d/plugins/html5-el/")
-(eval-after-load "rng-loc"
-  '(add-to-list 'rng-schema-locating-files "~/.emacs.d/plugins/html5-el/schemas.xml"))
-(require 'whattf-dt)
+;; (add-to-list 'load-path "~/.emacs.d/plugins/html5-el/")
+;; (eval-after-load "rng-loc"
+;;   '(add-to-list 'rng-schema-locating-files "~/.emacs.d/plugins/html5-el/schemas.xml"))
+;; (require 'whattf-dt)
 
 ;;; function to rotate a list of strings
 (defun permute-strings (args)
@@ -259,3 +247,11 @@ If point was already at that position, move point to beginning of line."
     (if (string= arg "")
         nil
       (cons arg (get-permute-args (+ num 1))))))
+
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (yas-global-mode 1)
+        ;;; moar packages
+	    (add-to-list 'package-archives 
+			 '("marmalade" . "http://marmalade-repo.org/packages/"))))
+
