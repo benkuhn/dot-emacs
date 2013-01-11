@@ -1,3 +1,7 @@
 session.*
 tramp
 *~
+elpa
+url/cache
+*.desktop
+cookies
