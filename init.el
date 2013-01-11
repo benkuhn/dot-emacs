@@ -96,7 +96,7 @@ If point was already at that position, move point to beginning of line."
 ;;; YASnippet
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 (require 'yasnippet)
-(yas/initialize)
+(yas--initialize)
 (yas/load-directory "~/.emacs.d/plugins/yasnippet/snippets")
 (yas/load-directory "~/.emacs.d/snippets/")
 
@@ -168,15 +168,23 @@ If point was already at that position, move point to beginning of line."
 ;;; stored usernames/passwords
 (setq auth-sources '((:source "~/.authinfo" :host t :protocol t)))
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(LilyPond-command-alist (quote (("LilyPond" "lilypond %s" "%s" "%l"
+ "View") ("2PS" "lilypond -f ps %s" "%s" "%p" "ViewPS") ("2Gnome"
+ "lilypond -b gnome %s") ("Book" "lilypond-book %x" "%x" "%l" "LaTeX")
+ ("LaTeX" "latex '\\nonstopmode\\input %l'" "%l" "%d" "ViewDVI")
+ ("View" "xdg-open %f") ("ViewPDF" "xdg-open %f") ("ViewPS" "gv
+ --watch %p") ("Midi" "") ("MidiAll" ""))))
  '(make-backup-files nil)
  '(auto-save-default nil)
  '(smooth-scroll-margin 10)
  '(isearch-allow-scroll t)
  '(coffee-tab-width 2)
+ '(lyqi:midi-backend (quote alsa))
+ '(lyqi:prefered-languages (quote (english)))
  '(org-agenda-files (quote ("~/Documents/org/classes.org")))
  '(tab-width 4)
  '(warning-minimum-level :error)
@@ -206,11 +214,11 @@ If point was already at that position, move point to beginning of line."
  '(dired-omit-files "^\\..*$")
  )
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "Consolas")))))
 
 (defun my-desktop-save ()
   (interactive)

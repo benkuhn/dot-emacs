@@ -16,9 +16,6 @@
 [submodule "plugins/scss-mode"]
 	path = plugins/scss-mode
 	url = git://github.com/antonj/scss-mode.git
-[submodule "plugins/lyqi"]
-	path = plugins/lyqi
-	url = git://github.com/nsceaux/lyqi.git
 [submodule "plugins/haskell-mode"]
 	path = plugins/haskell-mode
 	url = https://github.com/haskell/haskell-mode
