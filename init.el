@@ -21,6 +21,21 @@ If point was already at that position, move point to beginning of line."
          (beginning-of-line))))
 (global-set-key "\C-a" 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
 (defun yank-pop-forwards (arg)
   (interactive "p")
   (yank-pop (- arg)))
@@ -107,6 +122,7 @@ If point was already at that position, move point to beginning of line."
 ;;; kill unused buffers
 (require 'midnight)
 (midnight-delay-set 'midnight-delay "4:30am")
+(setq clean-buffer-list-delay-general 10)
 
 ;;;
 ;(add-to-list 'load-path "~/.emacs.d/plugins/misc")
@@ -116,6 +132,10 @@ If point was already at that position, move point to beginning of line."
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/plugins/scss-mode"))
 ;; (autoload 'scss-mode "scss-mode")
 ;; (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
+;; markdown-mode
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 ;;2-space tabs
 (defun coffee-custom ()
@@ -147,14 +167,20 @@ If point was already at that position, move point to beginning of line."
      (c-add-style "cs50" cs50-c-style)))
 (set-variable 'c-default-style "cs50")
 
+;;; w3m customizations
+(setq w3m-default-display-inline-images t)
+
 ;;; stored usernames/passwords
 (setq auth-sources '((:source "~/.authinfo" :host t :protocol t)))
+
+;;; customizations
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LilyPond-command-alist (quote (("LilyPond" "lilypond %s" "%s" "%l" "View") ("2PS" "lilypond -f ps %s" "%s" "%p" "ViewPS") ("2Gnome" "lilypond -b gnome %s") ("Book" "lilypond-book %x" "%x" "%l" "LaTeX") ("LaTeX" "latex '\\nonstopmode\\input %l'" "%l" "%d" "ViewDVI") ("View" "xdg-open %f") ("ViewPDF" "xdg-open %f") ("ViewPS" "gv --watch %p") ("Midi" "") ("MidiAll" ""))))
+ '(TeX-PDF-mode t)
  '(ansi-term-color-vector [unspecific "#586e75" "#dc322f" "#859900" "#b58900" "#268BD2" "#d33682" "#00877C" "#002b36"])
  '(auto-save-default nil)
  '(coffee-tab-width 2)
@@ -177,6 +203,7 @@ If point was already at that position, move point to beginning of line."
  '(lyqi:prefered-languages (quote (english)))
  '(make-backup-files nil)
  '(org-agenda-files (quote ("~/Documents/org/classes.org")))
+ '(safe-local-variable-values (quote ((default-tab-width 8) (tab-width 8))))
  '(set-mark-command-repeat-pop t)
  '(smooth-scroll-margin 10)
  '(tab-width 2)
@@ -234,13 +261,21 @@ If point was already at that position, move point to beginning of line."
         nil
       (cons arg (get-permute-args (+ num 1))))))
 
-(add-hook 'after-init-hook
-	  (lambda ()
-      ;;; colors
-	    (load-theme 'deeper-blue t)
-	    (disable-theme 'deeper-blue)
+;; Enable directory local variables with remote files. This facilitates both
+;; the (dir-locals-set-class-variables ...)(dir-locals-set-directory-class ...)
+;; and the dir-locals.el approaches.
+(defadvice hack-dir-local-variables (around my-remote-dir-local-variables)
+  "Allow directory local variables with remote files, by temporarily redefining
+     `file-remote-p' to return nil unconditionally."
+  (flet ((file-remote-p (&rest) nil))
+    ad-do-it))
+(ad-activate 'hack-dir-local-variables)
 
-	    (yas-global-mode 1)
-      ;;; moar packages
-	    (add-to-list 'package-archives 
-			 '("marmalade" . "http://marmalade-repo.org/packages/"))))
+(add-hook 'after-init-hook
+  (lambda ()
+    (yas-global-mode 1)
+    ;;; moar packages
+    (add-to-list 'package-archives 
+      '("marmalade" . "http://marmalade-repo.org/packages/"))))
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
