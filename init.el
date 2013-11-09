@@ -26,7 +26,7 @@ If point was already at that position, move point to beginning of line."
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
-        (filename (buffer-file-name)))
+        (filename n(buffer-file-name)))
     (if (not filename)
         (message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
@@ -154,7 +154,6 @@ If point was already at that position, move point to beginning of line."
 (setq inhibit-startup-message t)
 (put 'narrow-to-region 'disabled nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
-(server-start)
 
 ;;; make C mode nicer
 (setq-default indent-tabs-mode nil)
@@ -169,6 +168,88 @@ If point was already at that position, move point to beginning of line."
 
 ;;; w3m customizations
 (setq w3m-default-display-inline-images t)
+
+;;; mu4e setup
+(require 'mu4e)
+
+;; default
+;; (setq mu4e-maildir "~/Maildir")
+
+(setq mu4e-drafts-folder "/[Gmail].Drafts")
+(setq mu4e-sent-folder   "/[Gmail].Sent Mail")
+(setq mu4e-trash-folder  "/[Gmail].Trash")
+
+;; don't save message to Sent Messages, Gmail/IMAP takes care of this
+(setq mu4e-sent-messages-behavior 'delete)
+
+;; setup some handy shortcuts
+;; you can quickly switch to your Inbox -- press ``ji''
+;; then, when you want archive some messages, move them to
+;; the 'All Mail' folder by pressing ``ma''.
+
+(setq mu4e-maildir-shortcuts
+    '( ("/INBOX"               . ?i)
+       ("/[Gmail].Sent Mail"   . ?s)
+       ("/[Gmail].Drafts"      . ?d)
+       ("/[Gmail].Trash"       . ?t)
+       ("/[Gmail].All Mail"    . ?a)))
+
+;; allow for updating mail using 'U' in the main view:
+(setq
+ mu4e-get-mail-command "offlineimap"
+ mu4e-headers-include-related t
+ mu4e-headers-skip-duplicates t)
+
+;; something about ourselves
+(setq
+   user-mail-address "ben.s.kuhn@gmail.com"
+   user-full-name  "Ben Kuhn"
+   message-signature nil)
+
+;; sending mail -- replace USERNAME with your gmail username
+;; also, make sure the gnutls command line utils are installed
+;; package 'gnutls-bin' in Debian/Ubuntu
+
+(require 'smtpmail)
+;; (setq message-send-mail-function 'smtpmail-send-it
+;;    starttls-use-gnutls t
+;;    smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+;;    smtpmail-auth-credentials
+;;      '(("smtp.gmail.com" 587 "ben.s.kuhn@gmail.com" nil))
+;;    smtpmail-default-smtp-server "smtp.gmail.com"
+;;    smtpmail-smtp-server "smtp.gmail.com"
+;;    smtpmail-smtp-service 587)
+
+;; alternatively, for emacs-24 you can use:
+(setq message-send-mail-function 'smtpmail-send-it
+     smtpmail-stream-type 'starttls
+     smtpmail-default-smtp-server "smtp.gmail.com"
+     smtpmail-smtp-server "smtp.gmail.com"
+     smtpmail-smtp-service 587)
+
+;; don't keep message buffers around
+(setq message-kill-buffer-on-exit t)
+
+;; view in browser action
+(defun mu4e-msgv-action-view-in-browser (msg)
+  "View the body of the message in a web browser."
+  (interactive)
+  (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
+        (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
+    (unless html (error "No html part for this message"))
+    (with-temp-file tmpfile
+      (insert
+       "<html>"
+       "<head><meta http-equiv=\"content-type\""
+       "content=\"text/html;charset=UTF-8\">"
+       html))
+    (browse-url (concat "file://" tmpfile))))
+
+(add-to-list 'mu4e-view-actions
+             '("View in browser" . mu4e-msgv-action-view-in-browser) t)
+
+;; Emacs default mail program
+(setq mail-user-agent 'mu4e-user-agent)
 
 ;;; stored usernames/passwords
 (setq auth-sources '((:source "~/.authinfo" :host t :protocol t)))
@@ -243,7 +324,7 @@ If point was already at that position, move point to beginning of line."
       (narrow-to-region (point) (mark))
       (beginning-of-buffer)
       (replace-string (car args) "__TMP__")
-      (let ((end (permute-strings-helper args)))
+p      (let ((end (permute-strings-helper args)))
         (beginning-of-buffer)
         (replace-string "__TMP__" end)))))
 
@@ -264,18 +345,32 @@ If point was already at that position, move point to beginning of line."
 ;; Enable directory local variables with remote files. This facilitates both
 ;; the (dir-locals-set-class-variables ...)(dir-locals-set-directory-class ...)
 ;; and the dir-locals.el approaches.
-(defadvice hack-dir-local-variables (around my-remote-dir-local-variables)
-  "Allow directory local variables with remote files, by temporarily redefining
-     `file-remote-p' to return nil unconditionally."
-  (flet ((file-remote-p (&rest) nil))
-    ad-do-it))
-(ad-activate 'hack-dir-local-variables)
+;; (defadvice hack-dir-local-variables (around my-remote-dir-local-variables)
+;;   "Allow directory local variables with remote files, by temporarily redefining
+;;      `file-remote-p' to return nil unconditionally."
+;;   (flet ((file-remote-p (&rest) nil))
+;;     ad-do-it))
+;; (ad-activate 'hack-dir-local-variables)
 
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+;; server
 (add-hook 'after-init-hook
-  (lambda ()
-    (yas-global-mode 1)
-    ;;; moar packages
-    (add-to-list 'package-archives 
-      '("marmalade" . "http://marmalade-repo.org/packages/"))))
+          (lambda ()
+            (progn
+              (server-start)
+              (require 'edit-server)
+              (message "starting edit server...")
+              (edit-server-start)
+              (require 'yasnippet)
+              (message "yas-global-mode...")
+              (yas-global-mode 1)
+              )))
+
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
+(message "init succeeded!")
+

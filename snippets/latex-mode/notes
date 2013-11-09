@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: notes
+# key: notes
+# --
+\documentclass[12pt]{pset2}
+\classname{${1:`(if (string-match ".*/\\\([^/]+\\\)/.*" (buffer-file-name)) (replace-match "\\\1" nil nil (buffer-file-name)) (buffer-file-name))`}}
+\author{Ben Kuhn}
+\notes
+\date{`(format-time-string "%B %e, %Y")`}
+
+\begin{document}
+\maketitle
+
+$0
+
+\end{document}
