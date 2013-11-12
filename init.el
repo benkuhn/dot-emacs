@@ -192,6 +192,7 @@ If point was already at that position, move point to beginning of line."
        ("/[Gmail].Sent Mail"   . ?s)
        ("/[Gmail].Drafts"      . ?d)
        ("/[Gmail].Trash"       . ?t)
+       ("/To Do"               . ?T)
        ("/[Gmail].All Mail"    . ?a)))
 
 ;; allow for updating mail using 'U' in the main view:
