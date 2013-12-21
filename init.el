@@ -36,7 +36,7 @@
  '(lyqi:midi-backend (quote alsa))
  '(lyqi:prefered-languages (quote (english)))
  '(make-backup-files nil)
- '(org-agenda-files (quote ("~/Documents/org/classes.org")))
+ '(org-agenda-files nil)
  '(safe-local-variable-values (quote ((default-tab-width 8) (tab-width 8))))
  '(set-mark-command-repeat-pop t)
  '(smooth-scroll-margin 10)

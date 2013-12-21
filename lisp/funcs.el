@@ -14,7 +14,7 @@ If point was already at that position, move point to beginning of line."
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
-        (filename n(buffer-file-name)))
+        (filename (buffer-file-name)))
     (if (not filename)
         (message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
@@ -24,6 +24,7 @@ If point was already at that position, move point to beginning of line."
           (rename-buffer new-name)
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
+
 (defun yank-pop-forwards (arg)
   (interactive "p")
   (yank-pop (- arg)))
@@ -53,4 +54,3 @@ If point was already at that position, move point to beginning of line."
     (if (string= arg "")
         nil
       (cons arg (get-permute-args (+ num 1))))))
-

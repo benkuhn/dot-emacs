@@ -5,6 +5,7 @@
 
 ;;; ido
 (ido-mode)
+(setq ido-ignore-extensions t)
 
 ;;; nicer filenames
 (require 'uniquify)
