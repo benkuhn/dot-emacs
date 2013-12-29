@@ -36,7 +36,6 @@
  '(lyqi:midi-backend (quote alsa))
  '(lyqi:prefered-languages (quote (english)))
  '(make-backup-files nil)
- '(org-agenda-files nil)
  '(safe-local-variable-values (quote ((default-tab-width 8) (tab-width 8))))
  '(set-mark-command-repeat-pop t)
  '(smooth-scroll-margin 10)
@@ -78,16 +77,14 @@
 
 ;; server
 (add-hook 'after-init-hook
-          (lambda ()
-            (progn
-              (server-start)
-              (require 'edit-server)
-              (message "starting edit server...")
-              (edit-server-start)
-              (require 'yasnippet)
-              (message "yas-global-mode...")
-              (yas-global-mode 1)
-              )))
+          (defun my-set-up-server-and-yasnippet ()
+            (server-start)
+            (require 'edit-server)
+            (message "starting edit server...")
+            (edit-server-start)
+            (require 'yasnippet)
+            (message "yas-global-mode...")
+            (yas-global-mode 1)))
 
 (message "init succeeded!")
 

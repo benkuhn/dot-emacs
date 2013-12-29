@@ -1,5 +1,6 @@
 ;;; mu4e setup
 (require 'mu4e)
+(require 'org-mu4e)
 
 ;;; Maildir config
 (setq
@@ -8,8 +9,27 @@
   mu4e-sent-folder   "/[Gmail].Sent Mail"
   mu4e-trash-folder  "/[Gmail].Trash")
 
-;;; don't save message to Sent Messages, Gmail/IMAP takes care of this
-(setq mu4e-sent-messages-behavior 'delete)
+(setq
+  ;;; don't save message to Sent Messages, Gmail/IMAP takes care of this
+  mu4e-sent-messages-behavior 'delete
+  ;;; put attachments in Downloads
+  mu4e-attachment-dir  "~/Downloads"
+  ;;; user info
+  user-mail-address "ben.s.kuhn@gmail.com"
+  user-full-name  "Ben Kuhn"
+  message-signature nil
+  ;;; allow for updating mail using 'U' in the main view:
+  mu4e-get-mail-command "offlineimap"
+  ;;; don't keep message buffers around
+  message-kill-buffer-on-exit t
+  ;;; don't show the whole thread in the inbox
+  mu4e-headers-include-related nil
+  ;;; don't show duplicates
+  mu4e-headers-skip-duplicates t
+  ;;; nice HTML rendering
+  mu4e-html2text-command "w3m -dump -cols 80 -T text/html"
+  ;;; convert org-mode messages to multipart with HTML rich text
+  org-mu4e-convert-to-html t)
 
 ;;; one-key mailbox shortcuts
 (setq mu4e-maildir-shortcuts
@@ -19,15 +39,6 @@
        ("/[Gmail].Trash"       . ?t)
        ("/To Do"               . ?T)
        ("/[Gmail].All Mail"    . ?a)))
-
-;;; allow for updating mail using 'U' in the main view:
-(setq mu4e-get-mail-command "offlineimap")
-
-;;; user info
-(setq
-  user-mail-address "ben.s.kuhn@gmail.com"
-  user-full-name  "Ben Kuhn"
-  message-signature nil)
 
 ;;; sending mail
 (require 'smtpmail)
@@ -40,13 +51,6 @@
 
 ;;; Emacs default mail program
 (setq mail-user-agent 'mu4e-user-agent)
-
-;;; misc customizations
-(setq
-  message-kill-buffer-on-exit t     ;;; don't keep message buffers around
-  mu4e-headers-include-related nil  ;;; don't show the whole thread in the inbox
-  mu4e-headers-skip-duplicates t    ;;; don't show duplicates
-  mu4e-html2text-command "w3m -dump -cols 80 -T text/html") ;;; nice HTML rendering
 
 ;;; view in browser action
 (defun mu4e-msgv-action-view-in-browser (msg)

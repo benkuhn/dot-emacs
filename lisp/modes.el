@@ -18,10 +18,6 @@
 (recentf-mode 1)
 (setq recentf-max-menu-items 100)
 
-;;; linum
-(require 'linum)
-(global-linum-mode)
-
 ;;; text mode
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
