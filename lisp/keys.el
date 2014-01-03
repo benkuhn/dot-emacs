@@ -12,3 +12,4 @@
 (global-set-key "\C-a" 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
 (global-set-key "\M-Y" 'yank-pop-forwards)
+(global-set-key "\M-Q" 'unfill-paragraph)

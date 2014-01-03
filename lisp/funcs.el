@@ -54,3 +54,10 @@ If point was already at that position, move point to beginning of line."
     (if (string= arg "")
         nil
       (cons arg (get-permute-args (+ num 1))))))
+
+;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph    
+(defun unfill-paragraph ()
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
