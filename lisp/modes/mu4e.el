@@ -56,10 +56,10 @@
 (require 'smtpmail)
 
 (setq message-send-mail-function 'smtpmail-send-it
-     smtpmail-stream-type 'starttls
-     smtpmail-default-smtp-server "smtp.gmail.com"
-     smtpmail-smtp-server "smtp.gmail.com"
-     smtpmail-smtp-service 587)
+      smtpmail-stream-type 'starttls
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587)
 
 ;;; Emacs default mail program
 (setq mail-user-agent 'mu4e-user-agent)
@@ -82,31 +82,24 @@
 (add-to-list 'mu4e-view-actions
              '("View in browser" . mu4e-msgv-action-view-in-browser) t)
 
-;;; "archive" action and friends
-;;;TODO update index?
-(defun archive-message (msg)
-  (mu4e-action-retag-message msg "-\\Inbox"))
+;;; tagging actions
+(defmacro tag-action (sym1 tags)
+  (let* ((str (symbol-name sym1))
+         (sym (make-symbol (concat str "-message"))))
+    `(progn
+       (defun ,sym (msg)
+         (mu4e-action-retag-message msg ,tags))
+       (add-to-list 'mu4e-view-actions '(,str . ,sym)))))
 
-(defun unarchive-message (msg)
-  (mu4e-action-retag-message msg "+\\Inbox"))
-
-(defun todoify-message (msg)
-  (mu4e-action-retag-message msg "+To-Do"))
-
-(defun finish-message (msg)
-  (mu4e-action-retag-message msg "-To-Do"))
-
-(mapc (lambda (row)
-          (add-to-list 'mu4e-view-actions row t)
-          (add-to-list 'mu4e-headers-actions row t))
-      '( ("archive" . archive-message)
-         ("unarchive" . unarchive-message)
-         ("todo" . todoify-message)
-         ("finish" . finish-message)))
+(tag-action archive   "-\\Inbox")
+(tag-action unarchive "+\\Inbox")
+(tag-action todoify   "+To-Do")
+(tag-action finish    "-To-Do")
 
 ;;; reindex
 (define-key mu4e-main-mode-map "I" 'mu4e-update-index)
 (define-key mu4e-headers-mode-map "I" 'mu4e-update-index)
+(define-key mu4e-view-mode-map "I" 'mu4e-update-index)
 
 ;;; stored usernames/passwords
 (setq auth-sources '((:source "~/.authinfo" :host t :protocol t)))

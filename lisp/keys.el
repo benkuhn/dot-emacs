@@ -13,3 +13,12 @@
 (global-set-key [home] 'smart-beginning-of-line)
 (global-set-key "\M-Y" 'yank-pop-forwards)
 (global-set-key "\M-Q" 'unfill-paragraph)
+
+;;; org mode
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+;;; magit
+(global-set-key "\C-xg" 'magit-status)

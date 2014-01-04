@@ -61,3 +61,8 @@ If point was already at that position, move point to beginning of line."
   (interactive)
   (let ((fill-column (point-max)))
     (fill-paragraph nil)))
+
+(defun truncate-list (n lst)
+  (if (eq n 1)
+      (setcdr lst nil)
+    (truncate (- n 1) (cdr lst))))
