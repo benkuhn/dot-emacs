@@ -11,6 +11,8 @@
 (setq my-followup-file (concat org-directory "/followup.org"))
 (setq org-capture-templates '(("f" "Followup" entry (file+headline my-followup-file "Followups")
                                "* TODO Follow up on [[%l][%:subject]]")
+                              ("r" "Response" entry (file+headline my-followup-file "Responses")
+                               "* TODO Reply to %a")
                               ("t" "Todo" entry (file+headline org-default-notes-file "Non-recurring")
                                "* TODO %?\n  %i\n  %a"))
       dummy-to-stop-pp t)

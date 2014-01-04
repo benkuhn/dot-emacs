@@ -85,11 +85,10 @@
 ;;; tagging actions
 (defmacro tag-action (sym1 tags)
   (let* ((str (symbol-name sym1))
-         (sym (make-symbol (concat str "-message"))))
-    `(progn
-       (defun ,sym (msg)
-         (mu4e-action-retag-message msg ,tags))
-       (add-to-list 'mu4e-view-actions '(,str . ,sym)))))
+         (sym (intern (concat str "-message"))))
+    `(defun ,sym (msg)
+       ,(concat "Apply the tag string \"" tags "\" to the message.")
+       (mu4e-action-retag-message msg ,tags))))
 
 (tag-action archive   "-\\Inbox")
 (tag-action unarchive "+\\Inbox")
@@ -149,11 +148,13 @@
   )
 (defun convert-flowed-to-long-lines ()
   )
-(defun my-message-send-and-exit ()
-  (progn
-    (message-send-and-exit)))
 
-;; (define-key mu4e-compose-mode-map (kbd "C-c C-c") 'my-message-send-and-exit)
+;;; send function that does extra stuff (like ask for a reminder)
+(defun my-message-send-and-exit ()
+  (interactive)
+  (my-add-followup)
+  (message-send-and-exit))
+(define-key mu4e-compose-mode-map (kbd "C-c C-c") 'my-message-send-and-exit)
 
 ;;; mu4e-followup: on sending a message, ask for a followup date, and
 ;;; capture a to-do if necessary
@@ -170,24 +171,31 @@
                              (random (expt 16 6))))
     (message-add-header (concat "X-mu4e-UUID: " uuid))))
 
+(defun my-add-view-followup (msg)
+  (interactive)
+  (let ((time (org-read-date nil nil nil "Follow up in (leave blank for none):")))
+    (org-capture nil "r")
+    (org-deadline 0 time)
+    (org-capture-finalize)
+    (archive-message msg)))
+
+(add-to-list 'mu4e-view-actions '("Ccapture for org mode" . my-add-view-followup))
+
 (defun my-add-followup ()
   (interactive)
   (let ((time (org-read-date nil nil nil "Follow up in (leave blank for none):")))
-    (message (concat "time: " time "\ncur: " (org-read-date nil nil "")))
     (unless (string= time (org-read-date nil nil ""))
-      (message "adding a followup")
       (my-add-uuid)
       (org-capture nil "f")
       (org-deadline 0 time)
       (org-capture-finalize)
   )))
 
-(org-add-link-type "followup" 'org-man-open)
+(org-add-link-type "followup" 'org-followup-open)
 (defun org-followup-open (uuid)
   "Visit the message with the given uuid."
   ; (mu4e~proc-find...
   )
-
 (defun org-followup-store-link ()
   "Store a link to a manpage."
   (when (eq major-mode 'mu4e-compose-mode)
@@ -197,6 +205,7 @@
      :link (concat "followup:" uuid)
      :subject (message-get-subject)
      )))
+
 (defun message-get-subject ()
   (save-excursion
     (message-goto-subject)
@@ -207,3 +216,5 @@
        (point))
      (point))))
 (add-hook 'org-store-link-functions 'org-followup-store-link)
+
+(org-add-link-type "reply" 'org-reply-open)
