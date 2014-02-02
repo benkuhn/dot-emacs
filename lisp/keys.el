@@ -13,6 +13,7 @@
 (global-set-key [home] 'smart-beginning-of-line)
 (global-set-key "\M-Y" 'yank-pop-forwards)
 (global-set-key "\M-Q" 'unfill-paragraph)
+(global-set-key (kbd "C-x C-4") 'mu4e)
 
 ;;; org mode
 (global-set-key "\C-cl" 'org-store-link)

@@ -4,8 +4,8 @@
 
 ;;; Maildir config
 (setq
-  mu4e-maildir "~/Maildir"
-  mu4e-drafts-folder "/[Gmail].All Mail"
+  mu4e-maildir       "~/Maildir"
+  mu4e-drafts-folder "/[Gmail].Drafts"
   mu4e-sent-folder   "/[Gmail].All Mail"
   mu4e-trash-folder  "/[Gmail].Trash")
 
@@ -29,18 +29,7 @@
   ;;; nice HTML rendering
   mu4e-html2text-command "w3m -dump -cols 80 -T text/html"
   ;;; convert org-mode messages to multipart with HTML rich text
-  org-mu4e-convert-to-html t
-  ;;; fancy chars
-  ;; mu4e-headers-seen-mark '("S" . "☑") ;seen
-  ;; mu4e-headers-unread-mark '("u" . "☐") ; unseen
-  ;; mu4e-headers-flagged-mark '("F" .  "⚵")  ;flagged
-  ;; mu4e-headers-new-mark '("N" .  "✉")  ;new
-  ;; mu4e-headers-replied-mark '("R" . "↵") ;replied
-  ;; mu4e-headers-passed-mark '("P" . "⇉") ;passed
-  ;; mu4e-headers-encrypted-mark '("x" . "⚷") ;encrypted
-  ;; mu4e-headers-signed-mark '("s" . "✍") ;signed
-  mu4e-use-fancy-chars nil
-  )
+  org-mu4e-convert-to-html t)
 
 ;;; one-key mailbox shortcuts
 (setq mu4e-maildir-shortcuts
@@ -63,6 +52,7 @@
 
 ;;; Emacs default mail program
 (setq mail-user-agent 'mu4e-user-agent)
+;(setq mail-user-agent 'gnus-user-agent)
 
 ;;; view in browser action
 (defun mu4e-msgv-action-view-in-browser (msg)
@@ -86,14 +76,18 @@
 (defmacro tag-action (sym1 tags)
   (let* ((str (symbol-name sym1))
          (sym (intern (concat str "-message"))))
-    `(defun ,sym (msg)
-       ,(concat "Apply the tag string \"" tags "\" to the message.")
-       (mu4e-action-retag-message msg ,tags))))
+    `(progn
+       (defun ,sym (msg)
+         ,(concat "Apply the tag string \"" tags "\" to the message.")
+         (mu4e-action-retag-message msg ,tags))
+       (add-to-list 'mu4e-view-actions '(,str . ,sym))
+       (add-to-list 'mu4e-headers-actions '(,str . ,sym))
+       )))
 
-(tag-action archive   "-\\Inbox")
-(tag-action unarchive "+\\Inbox")
-(tag-action todoify   "+To-Do")
 (tag-action finish    "-To-Do")
+(tag-action todoify   "+To-Do")
+(tag-action unarchive "+\\Inbox")
+(tag-action archive   "-\\Inbox")
 
 ;;; reindex
 (define-key mu4e-main-mode-map "I" 'mu4e-update-index)
@@ -138,44 +132,84 @@
              'parent-addressed-to
              'choose-from-address)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Nice HTML composition
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (add-hook 'mu4e-compose-pre-hook
+;;   (defun my-store-own-quoting ()
+;;     "Quote the user my own way."
+;;     (if (eq nil mu4e-compose-parent-message)
+;;         (setq my-quoted-text "")
+;;       (setq my-quoted-text (my-quote-text-of-msg mu4e-compose-parent-message)))))
+
 ;;; use visual lines and flow text
 (add-hook 'mu4e-compose-mode-hook
    (defun my-start-format-flowed ()
      (auto-fill-mode 1)
-     (visual-line-mode 1)))
+     (visual-line-mode 1)
+     ;(message-goto-body)
+     ;(kill-region (point) (point-max))
+     ;(message "inserting")
+     ;(insert my-quoted-text)
+     ;(makunbound 'my-quoted-text)
+     ;(message-goto-body)
+     ))
 
-(defun convert-long-to-flowed-lines ()
-  )
-(defun convert-flowed-to-long-lines ()
-  )
+;; (defun my-make-message-multipart ()
+;;   "Replace the message with a multipart message."
+;;   (interactive)
+;;   (message-goto-body)
+;;   (let ((html (with-output-to-string
+;;                 (shell-command-on-region
+;;                  (point) (point-max)
+;;                  "pandoc -f markdown -t html" standard-output)))
+;;         (text (buffer-substring (point) (point-max))))
+;;     (kill-region (point) (point-max))
+;;     (insert
+;;      "<#multipart type=alternative>"
+;;      "<#part type=text/plain>"
+;;      text
+;;      "<#part type=text/html>"
+;;      html
+;;      "<#/multipart>")))
 
-;;; send function that does extra stuff (like ask for a reminder)
+;; (defun my-quote-text-of-msg (msg)
+;;   "View the body of the message in a web browser."
+;;   (interactive (list (mu4e-message-at-point)))
+;;   (let* ((html (mu4e-msg-field msg :body-html))
+;;          (txt  (mu4e-msg-field msg :body-txt))
+;;          (tmpfile (format "%s%d" temporary-file-directory (random))))
+;;     (cond
+;;      (html
+;;       (with-temp-file tmpfile
+;;         (insert "<blockquote>\n" html "\n</blockquote>\n"))
+;;       (message "temporary file: %s" tmpfile)
+;;       (shell-command-to-string (concat "pandoc -f html -t markdown " tmpfile)))
+;;      (txt
+;;       (mapconcat 'identity (split-string txt "\n") "\n> "))
+;;      (t (error "No contents for this message")))
+;;     ))
+
+;;; send function that does extra stuff:
+;;; - ask for a reminder
+;;; - turn markdown into a multipart message
 (defun my-message-send-and-exit ()
   (interactive)
   (my-add-followup)
   (message-send-and-exit))
 (define-key mu4e-compose-mode-map (kbd "C-c C-c") 'my-message-send-and-exit)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; mu4e-followup: on sending a message, ask for a followup date, and
 ;;; capture a to-do if necessary
-
-(defun my-add-uuid ()
-  (unless (boundp 'uuid)
-    (setq-local uuid (format "%04x%04x-%04x-%04x-%04x-%06x%06x"
-                             (random (expt 16 4))
-                             (random (expt 16 4))
-                             (random (expt 16 4))
-                             (random (expt 16 4))
-                             (random (expt 16 4))
-                             (random (expt 16 6))
-                             (random (expt 16 6))))
-    (message-add-header (concat "X-mu4e-UUID: " uuid))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun my-add-view-followup (msg)
   (interactive)
   (let ((time (org-read-date nil nil nil "Follow up in (leave blank for none):")))
     (org-capture nil "r")
-    (org-deadline 0 time)
+    (org-schedule 0 time)
     (org-capture-finalize)
     (archive-message msg)))
 
@@ -185,26 +219,30 @@
   (interactive)
   (let ((time (org-read-date nil nil nil "Follow up in (leave blank for none):")))
     (unless (string= time (org-read-date nil nil ""))
-      (my-add-uuid)
       (org-capture nil "f")
-      (org-deadline 0 time)
+      (org-schedule 0 time)
       (org-capture-finalize)
   )))
 
 (org-add-link-type "followup" 'org-followup-open)
-(defun org-followup-open (uuid)
+(defun org-followup-open (subject)
   "Visit the message with the given uuid."
-  ; (mu4e~proc-find...
+  (require 'mu4e)
+  (org-mu4e-open (concat "query:subject:\"" subject "\""))
   )
 (defun org-followup-store-link ()
   "Store a link to a manpage."
   (when (eq major-mode 'mu4e-compose-mode)
     ;; This is an email, we do make this link
-    (org-store-link-props
-     :type "followup:"
-     :link (concat "followup:" uuid)
-     :subject (message-get-subject)
-     )))
+    (let ((subject (message-get-subject)))
+      (org-store-link-props
+       :type "followup:"
+       :link (concat "followup:" subject)
+       ; remove [] so org-mode links work
+       :subject (de-square-bracket subject)
+       ))))
+(defun de-square-bracket (str)
+  (replace-regexp-in-string "\\[" "{" (replace-regexp-in-string "\\]" "}" str)))
 
 (defun message-get-subject ()
   (save-excursion

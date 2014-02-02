@@ -6,6 +6,8 @@
 
 (column-number-mode 1)
 (show-paren-mode 1)
+
+;;; don't annoy me
 (setq disabled-command-function nil)
 (setq inhibit-startup-message t)
 (defalias 'yes-or-no-p 'y-or-n-p)

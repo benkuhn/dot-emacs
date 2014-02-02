@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(LilyPond-command-alist (quote (("LilyPond" "lilypond %s" "%s" "%l" "View") ("2PS" "lilypond -f ps %s" "%s" "%p" "ViewPS") ("2Gnome" "lilypond -b gnome %s") ("Book" "lilypond-book %x" "%x" "%l" "LaTeX") ("LaTeX" "latex '\\nonstopmode\\input %l'" "%l" "%d" "ViewDVI") ("View" "xdg-open %f") ("ViewPDF" "xdg-open %f") ("ViewPS" "gv --watch %p") ("Midi" "") ("MidiAll" ""))))
  '(TeX-PDF-mode t)
- '(ansi-term-color-vector [unspecific "#586e75" "#dc322f" "#859900" "#b58900" "#268BD2" "#d33682" "#00877C" "#002b36"])
+ '(ansi-term-color-vector [unspecific "#586e75" "#dc322f" "#859900" "#b58900" "#268BD2" "#d33682" "#00877C" "#002b36"] t)
  '(auto-save-default nil)
  '(coffee-tab-width 2)
  '(completion-ignored-extensions dired-omit-extensions)
@@ -36,6 +36,7 @@
  '(lyqi:midi-backend (quote alsa))
  '(lyqi:prefered-languages (quote (english)))
  '(make-backup-files nil)
+ '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(safe-local-variable-values (quote ((default-tab-width 8) (tab-width 8))))
  '(set-mark-command-repeat-pop t)
  '(smooth-scroll-margin 10)
