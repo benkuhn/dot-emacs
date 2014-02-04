@@ -11,3 +11,12 @@
 (setq disabled-command-function nil)
 (setq inhibit-startup-message t)
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+(setq initial-scratch-message "")
+(setq inhibit-startup-message t)
+
+;;; make mark ring usable
+(setq set-mark-command-repeat-pop t)
+
+;;; only one space!
+(setq sentence-end-double-space nil)

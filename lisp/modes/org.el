@@ -43,10 +43,10 @@ If point was already at that position, move point to beginning of line."
 ;;; Org mobile stuff: sync automatically
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq org-mobile-force-id-on-agenda-items nil)
-(add-hook 'auto-save-hook
-          (defun org-mobile-sync ()
-            (interactive)
-            (org-mobile-pull)))
+(defun org-mobile-sync ()
+  (interactive)
+  (org-mobile-pull))
+(add-hook 'midnight-hook 'org-mobile-sync)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Effort estimates
@@ -60,7 +60,7 @@ If point was already at that position, move point to beginning of line."
           (org-agenda-start-day "+0d")
           (org-agenda-overriding-columns-format
            "%25ITEM %TODO %15DEADLINE %3PRIORITY %4Effort{:} %CLOCKSUM_T")
-          (org-deadline-warning-days 0)
+          (org-deadline-warning-days 1)
           (org-agenda-prefix-format
            '((agenda . "%7e %s")
              (timeline . "  % s")

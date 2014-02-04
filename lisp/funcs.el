@@ -66,3 +66,7 @@ If point was already at that position, move point to beginning of line."
   (if (eq n 1)
       (setcdr lst nil)
     (truncate (- n 1) (cdr lst))))
+
+(defun quit-other-window ()
+  (interactive)
+  (quit-window nil (next-window)))

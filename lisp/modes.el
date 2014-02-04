@@ -4,8 +4,10 @@
       (load-library (concat "modes/" fname))))
 
 ;;; ido
+(require 'ido-ubiquitous)
 (ido-mode)
 (setq ido-ignore-extensions t)
+(ido-ubiquitous-mode 1)
 
 ;;; nicer filenames
 (require 'uniquify)
@@ -35,3 +37,8 @@
 
 ;;; for LaTeX: auto-refresh PDF buffers
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+;;; powerline
+(require 'powerline)
+(face-attribute 'mode-line :background)
+(powerline-default-theme)

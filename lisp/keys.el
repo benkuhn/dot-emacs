@@ -1,19 +1,24 @@
 ;;; better keybindings.
-(global-set-key "\C-x\C-m" 'execute-extended-command)
+;; easier to hit than M-x
+(global-set-key (kbd "C-.") 'execute-extended-command)
+;; TODO make this pick between backward-kill-word and kill-region
 (global-set-key "\C-w" 'backward-kill-word)
+;; C-x b foo C-x k
 (global-set-key "\C-xk" 'kill-this-buffer)
+;; TODO I don't want to bind this :(
 (global-set-key "\C-x\C-k" 'kill-region)
 (define-key key-translation-map "\C-h" "\C-?")
 (global-set-key (kbd "C-?") 'help-command)
-(global-set-key "\C-c\C-r" 'replace-string)
-(global-set-key "\C-c\C-e" 'replace-regexp)
-(global-set-key "\C-x\C-r" 'recentf-open-files)
+(global-set-key (kbd "C-x M-%") 'replace-string)
+(global-set-key "\C-x\C-r" 'query-replace-regexp)
 (global-set-key (kbd "\C-x r S") 'string-insert-rectangle)
 (global-set-key "\C-a" 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
 (global-set-key "\M-Y" 'yank-pop-forwards)
 (global-set-key "\M-Q" 'unfill-paragraph)
 (global-set-key (kbd "C-x C-4") 'mu4e)
+
+(global-set-key (kbd "C-M-S-q") 'quit-other-window)
 
 ;;; org mode
 (global-set-key "\C-cl" 'org-store-link)
