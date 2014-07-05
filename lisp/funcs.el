@@ -7,7 +7,7 @@ If point was already at that position, move point to beginning of line."
   (let ((oldpos (point)))
     (back-to-indentation)
     (and (= oldpos (point))
-         (beginning-of-line))))
+         (beginning-of-line 1))))
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
@@ -55,6 +55,13 @@ If point was already at that position, move point to beginning of line."
         nil
       (cons arg (get-permute-args (+ num 1))))))
 
+;;; make C-w work nicely
+(defun my-c-w ()
+  (interactive)
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word 1)))
+
 ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph    
 (defun unfill-paragraph ()
   "Takes a multi-line paragraph and makes it into a single line of text."
@@ -70,3 +77,7 @@ If point was already at that position, move point to beginning of line."
 (defun quit-other-window ()
   (interactive)
   (quit-window nil (next-window)))
+
+;; previous window
+(defun prev-window ()
+  (other-window -1))

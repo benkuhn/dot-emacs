@@ -2,7 +2,7 @@
 (global-linum-mode 1)
 
 ;; don't run in modes I don't like
-(setq linum-blacklist '(org-mode doc-view-mode dired-mode))
+(setq linum-blacklist '(doc-view-mode dired-mode org-mode))
 
 ;; override the function that turns on linum mode
 (defun linum-on ()

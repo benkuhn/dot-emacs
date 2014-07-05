@@ -1,24 +1,38 @@
 ;;; better keybindings.
 ;; easier to hit than M-x
 (global-set-key (kbd "C-.") 'execute-extended-command)
-;; TODO make this pick between backward-kill-word and kill-region
-(global-set-key "\C-w" 'backward-kill-word)
+;; if no active region, do backward-delete-word
+(global-set-key (kbd "C-w") 'my-c-w)
 ;; C-x b foo C-x k
 (global-set-key "\C-xk" 'kill-this-buffer)
-;; TODO I don't want to bind this :(
-(global-set-key "\C-x\C-k" 'kill-region)
+;; C-h should backspace
 (define-key key-translation-map "\C-h" "\C-?")
 (global-set-key (kbd "C-?") 'help-command)
 (global-set-key (kbd "C-x M-%") 'replace-string)
+;; qrr is awesome and useful
 (global-set-key "\C-x\C-r" 'query-replace-regexp)
+;; recent file
+;; TODO better autocompletion (e.g. icicles?)
+(global-set-key (kbd "M-g r") 'recentf-open-files)
+;; as is s-i-r
 (global-set-key (kbd "\C-x r S") 'string-insert-rectangle)
+;; Eclipse-like beginning of line
 (global-set-key "\C-a" 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
+;; more convenient things
 (global-set-key "\M-Y" 'yank-pop-forwards)
 (global-set-key "\M-Q" 'unfill-paragraph)
-(global-set-key (kbd "C-x C-4") 'mu4e)
-
+;; freaking completion/help buffers sticking around all the time
 (global-set-key (kbd "C-M-S-q") 'quit-other-window)
+;; by analogy to C-x l
+(global-set-key (kbd "C-x w") 'count-words)
+;; I never use open-line, but use other-window a lot
+(global-set-key (kbd "C-o") 'other-window)
+(global-set-key (kbd "C-O") 'other-window)
+(global-unset-key (kbd "C-x o")) ;; hack to break old habit
+
+;;; program shortcuts
+(global-set-key (kbd "C-x C-4") 'mu4e)
 
 ;;; org mode
 (global-set-key "\C-cl" 'org-store-link)

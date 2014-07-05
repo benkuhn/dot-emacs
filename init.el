@@ -16,6 +16,9 @@
         "my-config"
         ))
 
+;; not really sure why this doesn't autoload
+(load "ess-site")
+
 ;;; customizations
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -36,17 +39,21 @@
  '(dired-recursive-copies (quote always))
  '(dired-recursive-deletes (quote top))
  '(fci-rule-color "#383838")
+ '(global-linum-mode t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-tail-colors (quote (("#F2F2F2" . 0) ("#B4C342" . 20) ("#69CABF" . 30) ("#6DA8D2" . 50) ("#DEB542" . 60) ("#F2804F" . 70) ("#F771AC" . 85) ("#F2F2F2" . 100))))
  '(ido-enable-flex-matching t)
  '(ido-everywhere t)
  '(inhibit-startup-echo-area-message "bkuhn")
  '(isearch-allow-scroll t)
+ '(linum-delay t)
+ '(linum-eager nil)
  '(lyqi:midi-backend (quote alsa))
  '(lyqi:prefered-languages (quote (english)))
  '(make-backup-files nil)
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(safe-local-variable-values (quote ((default-tab-width 8) (tab-width 8))))
+ '(save-interprogram-paste-before-kill t)
  '(set-mark-command-repeat-pop t)
  '(smooth-scroll-margin 10)
  '(tab-width 2)
@@ -57,19 +64,20 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "microsoft" :family "Consolas"))))
- '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))) t)
- '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))) t)
- '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))) t)
- '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))) t)
- '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))) t)
- '(font-latex-sectioning-5-face ((t (:foreground "blue4" :weight bold))) t)
+ '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))))
+ '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))))
+ '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))))
+ '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))))
+ '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))))
+ '(font-latex-sectioning-5-face ((t (:weight bold))))
  '(linum ((t (:inherit (shadow default) :background "#002b36" :foreground "#839496" :height 80))))
- '(mode-line ((t (:background "#93a1a1" :foreground "#073642" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))
- '(mode-line-inactive ((t (:inherit mode-line :background "#586e75" :foreground "#073642" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))
- '(powerline-active1 ((t (:inherit mode-line :background "#657b83"))))
- '(powerline-active2 ((t (:inherit mode-line :background "#073642" :foreground "#93a1a1"))))
+ '(message-cited-text ((t (:foreground "#586e75"))))
+ '(mode-line ((t (:background "#073642" :foreground "#93a1a1" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))
+ '(mode-line-inactive ((t (:inherit mode-line :background "#002b36" :foreground "#93a1a1" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))
+ '(powerline-active1 ((t (:inherit mode-line :background "#657b83" :foreground "#073642"))))
+ '(powerline-active2 ((t (:inherit mode-line :background "#93a1a1" :foreground "#073642"))))
  '(powerline-inactive1 ((t (:inherit mode-line-inactive :background "#073642" :foreground "#93a1a1"))))
- '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "#002b36" :foreground "#93a1a1")))))
+ '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "#073642" :foreground "#93a1a1")))))
 
 ;; (load "~/.emacs.d/plugins/nxhtml/autostart.el")
 ;; HTML5

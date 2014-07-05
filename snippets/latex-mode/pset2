@@ -5,8 +5,8 @@
 \documentclass[12pt]{pset2}
 \author{Ben Kuhn}
 \date{`(format-time-string "%B %e, %Y")`}
-\classname{${1:`(if (string-match ".*/\\\([^/]+\\\)/.*" (buffer-file-name)) (replace-match "\\\1" nil nil (buffer-file-name)) (buffer-file-name))`}}
-\psetid{${2:`(if (string-match ".*/\\\([^/]+\\\)/ps\\\([0-9]+\\\).*" (buffer-file-name)) (replace-match "\\\2" nil nil (buffer-file-name)) (buffer-file-name))`}}
+\classname{${1:`(if (string-match ".*/\\\([^/]+\\\)/.*" (buffer-file-name)) (replace-match "\\1" nil nil (buffer-file-name)) (buffer-file-name))`}}
+\psetid{${2:`(if (string-match ".*/\\\([^/]+\\\)/ps\\\([0-9]+\\\).*" (buffer-file-name)) (replace-match "\\2" nil nil (buffer-file-name)) (buffer-file-name))`}}
 
 \begin{document}
 \maketitle

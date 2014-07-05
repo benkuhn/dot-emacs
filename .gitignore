@@ -6,3 +6,5 @@ url/cache
 *.desktop
 cookies
 bookmarks
+.org-id-locations
+ac-comphist.dat

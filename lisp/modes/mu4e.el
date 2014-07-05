@@ -110,7 +110,7 @@
   (mu4e-read-option "Choose a From address: " my-from-addresses))
 (defun parent-addressed-to (addr)
   (flet ((matches (sym) (mu4e-message-contact-field-matches mu4e-compose-parent-message sym addr)))
-    (or (matches :to) (matches :cc) (matches :bcc))))
+    (or (matches :from) (matches :to) (matches :cc) (matches :bcc))))
 
 (defun find-in-list (lst fun default)
   (let ((elt (car lst)))

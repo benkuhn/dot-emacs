@@ -45,6 +45,7 @@ If point was already at that position, move point to beginning of line."
 (setq org-mobile-force-id-on-agenda-items nil)
 (defun org-mobile-sync ()
   (interactive)
+  (org-mobile-push)
   (org-mobile-pull))
 (add-hook 'midnight-hook 'org-mobile-sync)
 
@@ -59,7 +60,7 @@ If point was already at that position, move point to beginning of line."
          ((org-agenda-ndays 8)
           (org-agenda-start-day "+0d")
           (org-agenda-overriding-columns-format
-           "%25ITEM %TODO %15DEADLINE %3PRIORITY %4Effort{:} %CLOCKSUM_T")
+           "%25ITEM %TODO %15DEADLINE %3PRIORITY %4Effort{:} %CLOCKSUM")
           (org-deadline-warning-days 1)
           (org-agenda-prefix-format
            '((agenda . "%7e %s")
