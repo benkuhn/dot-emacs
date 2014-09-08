@@ -42,3 +42,6 @@
 
 ;;; magit
 (global-set-key "\C-xg" 'magit-status)
+
+;;; duplicate line
+(global-set-key "\C-c\C-d" 'duplicate-line)

@@ -35,9 +35,10 @@ If point was already at that position, move point to beginning of line."
     (and (= oldpos (point))
          (org-beginning-of-line))))
 
-(add-hook 'org-mode-hook
-          (defun my-org-keybindings ()
-            (local-set-key "\C-a" 'org-smart-beginning-of-line)))
+;; Don't do this since it's not as helpful with org-indent-mode
+;; (add-hook 'org-mode-hook
+;;           (defun my-org-keybindings ()
+;;             (local-set-key "\C-a" 'org-smart-beginning-of-line)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Org mobile stuff: sync automatically
@@ -55,19 +56,34 @@ If point was already at that position, move point to beginning of line."
 
 (setq org-global-properties
         '(("Effort_ALL" . "0 0:05 0:15 0:30 1:00 1:30 2:00")))
+
+(concat "a" "b")
+
+(defun agenda-gtd (hotkey tags)
+  `(,hotkey ,(concat "Tagged with " tags)
+            ((tags-todo "+time")
+             (agenda ,tags)
+             (tags-todo ,(concat tags "-time")))
+            ((org-agenda-todo-ignore-scheduled t)
+             (org-agenda-todo-ignore-deadlines t))
+  ))
+
+(agenda-gtd "h" "+home")
+
 (setq org-agenda-custom-commands
-      `(("b" "custom" agenda "Ben's custom agenda"
-         ((org-agenda-ndays 8)
-          (org-agenda-start-day "+0d")
-          (org-agenda-overriding-columns-format
-           "%25ITEM %TODO %15DEADLINE %3PRIORITY %4Effort{:} %CLOCKSUM")
-          (org-deadline-warning-days 1)
-          (org-agenda-prefix-format
-           '((agenda . "%7e %s")
-             (timeline . "  % s")
-             (todo . " %i %-12:c")
-             (tags . " %i %-12:c")
-             (search . " %i %-12:c")))
-          (org-agenda-sorting-strategy
-           '(todo-state-down habit-down effort-down category-keep))
-          ))))
+      `(
+        ,(agenda-gtd "h" "+home")
+        ,(agenda-gtd "p" "+phone")
+        ,(agenda-gtd "e" "+errands")
+        ,(agenda-gtd "t" "+time")
+        ,(agenda-gtd "r" "+create")
+        ,(agenda-gtd "o" "+consume")
+        ,(agenda-gtd "b" "+busy")
+        ,(agenda-gtd "h" "+home")
+        ,(agenda-gtd "a" "")
+        ))
+
+(setq org-agenda-dim-blocked-tasks 'invisible)
+(setq org-agenda-tags-todo-honor-ignore-options t)
+(setq org-enforce-todo-dependencies t)
+(setq org-track-ordered-property-with-tag "seq")

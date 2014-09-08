@@ -11,9 +11,8 @@
                       temp-file
                       (file-name-directory buffer-file-name))))
     (list "/home/bkuhn/Apps/Enthought/Canopy/User/bin/epylint" (list local-file))))
-
-(add-to-list 'flymake-allowed-file-name-masks
-             '("\\.py\\'" flymake-pylint-init))
+  
+; (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pylint-init))
 
 (add-hook 'python-mode-hook
           (lambda ()
