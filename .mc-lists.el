@@ -20,6 +20,7 @@
         org-beginning-of-line
         org-delete-char
         org-end-of-line
+        org-kill-line
         org-meta-return
         org-return-indent
         org-schedule

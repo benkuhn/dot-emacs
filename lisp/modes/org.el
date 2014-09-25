@@ -3,6 +3,7 @@
 (setq org-directory "~/Documents/org")
 (setq
   org-agenda-files (list org-directory)
+  org-agenda-window-setup 'other-window
   org-default-notes-file (concat org-directory "/tasks.org")
   org-agenda-span 1
   org-mobile-inbox-for-pull (concat org-directory "/flagged.org")

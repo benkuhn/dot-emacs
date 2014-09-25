@@ -4,7 +4,10 @@ tramp
 elpa
 url/cache
 *.desktop
+*.lock
 cookies
 bookmarks
 .org-id-locations
 ac-comphist.dat
+.python-environments/
+eshell/history

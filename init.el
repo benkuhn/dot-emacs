@@ -63,15 +63,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "microsoft" :family "Consolas"))))
- '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))))
- '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))))
- '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))))
- '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))))
- '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))))
- '(font-latex-sectioning-5-face ((t (:weight bold))))
+ '(default ((t (:inherit nil :stipple nil :background "#042028" :foreground "#708183" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "apple" :family "Consolas"))))
+ '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))) t)
+ '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))) t)
+ '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))) t)
+ '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))) t)
+ '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))) t)
+ '(font-latex-sectioning-5-face ((t (:weight bold))) t)
  '(linum ((t (:inherit (shadow default) :background "#002b36" :foreground "#839496" :height 80))))
- '(message-cited-text ((t (:foreground "#586e75"))))
+ '(message-cited-text ((t (:foreground "#586e75"))) t)
  '(mode-line ((t (:background "#073642" :foreground "#93a1a1" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))
  '(mode-line-inactive ((t (:inherit mode-line :background "#002b36" :foreground "#93a1a1" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))
  '(powerline-active1 ((t (:inherit mode-line :background "#657b83" :foreground "#073642"))))
