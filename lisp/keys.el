@@ -1,6 +1,6 @@
 ;;; better keybindings.
 ;; easier to hit than M-x
-(global-set-key (kbd "C-.") 'execute-extended-command)
+(global-set-key (kbd "C-.") 'helm-M-x)
 ;; if no active region, do backward-delete-word
 (global-set-key (kbd "C-w") 'my-c-w)
 ;; C-x b foo C-x k
@@ -45,3 +45,6 @@
 
 ;;; duplicate line
 (global-set-key "\C-c\C-d" 'duplicate-line)
+
+;;; zen mode
+(global-set-key "\C-x\C-z" 'zen-mode)

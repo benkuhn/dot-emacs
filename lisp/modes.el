@@ -3,12 +3,6 @@
   (if (and (> (length fname) 3) (string= (substring fname -3) ".el"))
       (load-library (concat "modes/" fname))))
 
-;;; ido
-(require 'ido-ubiquitous)
-(ido-mode)
-(setq ido-ignore-extensions t)
-(ido-ubiquitous-mode 1)
-
 ;;; nicer filenames
 (require 'uniquify)
 (setq
@@ -31,6 +25,7 @@
 ;; markdown-mode
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
 ;;; w3m customizations
 (setq w3m-default-display-inline-images t)
@@ -40,5 +35,4 @@
 
 ;;; powerline
 (require 'powerline)
-(face-attribute 'mode-line :background)
 (powerline-default-theme)

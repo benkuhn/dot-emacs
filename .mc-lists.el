@@ -17,9 +17,11 @@
         org-agenda-previous-line
         org-agenda-schedule
         org-agenda-todo
+        org-archive-subtree-default
         org-beginning-of-line
         org-delete-char
         org-end-of-line
+        org-insert-todo-heading
         org-kill-line
         org-meta-return
         org-return-indent
