@@ -10,7 +10,12 @@
 
 (defun zen-mode-on-disable ()
   (message "zen mode disabled")
-  (jump-to-register ?Z)
+  (let ((reg (get-register ?Z)))
+    (if (and (consp reg)
+             (window-configuration-p (car reg)))
+        (progn
+          (jump-to-register ?Z)
+          (set-register ?Z nil))))
   (set-fringe-style)
   (widen))
 

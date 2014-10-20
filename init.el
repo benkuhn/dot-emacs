@@ -50,6 +50,7 @@
  '(dired-omit-size-limit nil)
  '(dired-recursive-copies (quote always))
  '(dired-recursive-deletes (quote top))
+ '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(fci-rule-color "#383838")
  '(global-linum-mode t)
  '(global-undo-tree-mode t)
@@ -65,6 +66,7 @@
  '(magit-auto-revert-mode-lighter "")
  '(make-backup-files nil)
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+ '(require-final-newline t)
  '(safe-local-variable-values (quote ((my-pylint-rcfile . "/Users/ben/code/thm/alpha/support/pylint/pylintrc") (my-python-virtualenv . "thm") (my-pylint-rcfile "/Users/ben/code/thm/alpha/support/pylint/pylintrc") (my-python-virtualenv "thm") (default-tab-width 8) (tab-width 8))))
  '(save-interprogram-paste-before-kill t)
  '(set-mark-command-repeat-pop t)
@@ -92,7 +94,8 @@
  '(powerline-active1 ((t (:inherit mode-line :background "#657b83" :foreground "#073642"))))
  '(powerline-active2 ((t (:inherit mode-line :background "#93a1a1" :foreground "#073642"))))
  '(powerline-inactive1 ((t (:inherit mode-line-inactive :background "#073642" :foreground "#93a1a1"))))
- '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "#073642" :foreground "#93a1a1")))))
+ '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "#073642" :foreground "#93a1a1"))))
+ '(variable-pitch ((t (:family "Lucida Grande")))))
 
 ;;; TODO: make these part of customize or figure out how they can interact with Solarized well
 (defun reset-modeline-styles ()
