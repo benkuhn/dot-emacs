@@ -36,3 +36,18 @@
 ;;; powerline
 (require 'powerline)
 (powerline-default-theme)
+
+;;; undo tree
+(require 'undo-tree)
+(define-key undo-tree-map [67108927] nil)
+(global-undo-tree-mode -1)
+
+;;; Helm/Projectile
+; global mode always on, so no lighter
+(require 'helm)
+(require 'helm-projectile)
+(require 'projectile)
+(setq helm-completion-mode-string "")
+(helm-mode 1)
+(projectile-global-mode 1)
+(helm-projectile-on)

@@ -1,13 +1,11 @@
 ;;; better keybindings.
-;; easier to hit than M-x
-(global-set-key (kbd "C-.") 'helm-M-x)
 ;; if no active region, do backward-delete-word
 (global-set-key (kbd "C-w") 'my-c-w)
 ;; C-x b foo C-x k
 (global-set-key "\C-xk" 'kill-this-buffer)
 ;; C-h should backspace
 (define-key key-translation-map "\C-h" "\C-?")
-(global-set-key (kbd "C-?") 'help-command)
+(global-set-key (kbd "M-?") 'help-command)
 (global-set-key (kbd "C-x M-%") 'replace-string)
 ;; qrr is awesome and useful
 (global-set-key "\C-x\C-r" 'query-replace-regexp)
@@ -48,3 +46,7 @@
 
 ;;; zen mode
 (global-set-key "\C-x\C-z" 'zen-mode)
+
+;;; helm etc
+(global-set-key (kbd "C-.") 'helm-M-x)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)

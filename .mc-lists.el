@@ -42,4 +42,5 @@
         beginning-of-buffer
         end-of-buffer
         ido-switch-buffer
+        pp-eval-last-sexp
         ))

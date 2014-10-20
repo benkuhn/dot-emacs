@@ -1,10 +1,21 @@
-(add-to-list 'load-path "~/.emacs.d/lisp")
+;;;; Set up packages
 
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
+
+;;;; better eval-after-load for mode config
+;; source: http://milkbox.net/note/single-file-master-emacs-configuration/
+
+(defmacro after (mode &rest body)
+  "`eval-after-load' MODE evaluate BODY."
+  (declare (indent defun))
+  `(eval-after-load ,mode
+     '(progn ,@body)))
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;;; Solarized is pretty
 (load-theme 'solarized-dark t)
@@ -19,7 +30,7 @@
 ;; not really sure why this doesn't autoload
 (load "ess-site")
 
-;;; customizations
+;;;; customizations
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -41,6 +52,7 @@
  '(dired-recursive-deletes (quote top))
  '(fci-rule-color "#383838")
  '(global-linum-mode t)
+ '(global-undo-tree-mode t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-tail-colors (quote (("#F2F2F2" . 0) ("#B4C342" . 20) ("#69CABF" . 30) ("#6DA8D2" . 50) ("#DEB542" . 60) ("#F2804F" . 70) ("#F771AC" . 85) ("#F2F2F2" . 100))))
  '(ido-enable-flex-matching t)
@@ -50,13 +62,15 @@
  '(linum-eager nil)
  '(lyqi:midi-backend (quote alsa))
  '(lyqi:prefered-languages (quote (english)))
+ '(magit-auto-revert-mode-lighter "")
  '(make-backup-files nil)
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
- '(safe-local-variable-values (quote ((default-tab-width 8) (tab-width 8))))
+ '(safe-local-variable-values (quote ((my-pylint-rcfile . "/Users/ben/code/thm/alpha/support/pylint/pylintrc") (my-python-virtualenv . "thm") (my-pylint-rcfile "/Users/ben/code/thm/alpha/support/pylint/pylintrc") (my-python-virtualenv "thm") (default-tab-width 8) (tab-width 8))))
  '(save-interprogram-paste-before-kill t)
  '(set-mark-command-repeat-pop t)
  '(smooth-scroll-margin 10)
  '(tab-width 2)
+ '(undo-tree-mode-lighter "")
  '(warning-minimum-level :error)
  '(zen-mode nil))
 
