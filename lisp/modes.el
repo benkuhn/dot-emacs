@@ -41,18 +41,15 @@
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 
-;;; Helm/Projectile
-; global mode always on, so no lighter
-(require 'helm)
-(require 'helm-projectile)
-(require 'projectile)
-(setq helm-completion-mode-string "")
-(helm-mode 1)
-(projectile-global-mode 1)
-(helm-projectile-on)
-
-(diminish 'auto-complete-mode "")
-(diminish 'ropemacs-mode "")
-(diminish 'yas-minor-mode "")
-(diminish 'magit-auto-revert-mode "")
-(diminish 'undo-tree-mode "")
+(after 'auto-complete
+  (diminish 'auto-complete-mode ""))
+(after 'ropemacs
+  (diminish 'ropemacs-mode ""))
+(after 'yasnippet
+  (diminish 'yas-minor-mode ""))
+(after 'magit
+  (diminish 'magit-auto-revert-mode ""))
+(after 'undo-tree
+  (diminish 'undo-tree-mode ""))
+(after 'helm
+  (diminish 'helm-mode ""))

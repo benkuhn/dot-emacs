@@ -6,29 +6,7 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 
-;;;; better eval-after-load for mode config
-;; source: http://milkbox.net/note/single-file-master-emacs-configuration/
-
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY."
-  (declare (indent defun))
-  `(eval-after-load ,mode
-     '(progn ,@body)))
-
-(add-to-list 'load-path "~/.emacs.d/lisp")
-
-;;; Solarized is pretty
-(load-theme 'solarized-dark t)
-
-(mapc 'load-library
-      '("funcs"
-        "keys"
-        "modes"
-        "my-config"
-        ))
-
-;; not really sure why this doesn't autoload
-(load "ess-site")
+(message "setting custom variables...")
 
 ;;;; customizations
 (custom-set-variables
@@ -41,7 +19,6 @@
  '(ansi-term-color-vector [unspecific "#586e75" "#dc322f" "#859900" "#b58900" "#268BD2" "#d33682" "#00877C" "#002b36"] t)
  '(auto-save-default nil)
  '(coffee-tab-width 2)
- '(completion-ignored-extensions dired-omit-extensions)
  '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
  '(desktop-restore-eager 15)
  '(dired-enable-local-variables nil)
@@ -54,6 +31,7 @@
  '(fci-rule-color "#383838")
  '(global-linum-mode t)
  '(global-undo-tree-mode t)
+ '(helm-boring-buffer-regexp-list (quote ("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*Pymacs" "\\*epc" "\\*magit-process\\*")))
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-tail-colors (quote (("#F2F2F2" . 0) ("#B4C342" . 20) ("#69CABF" . 30) ("#6DA8D2" . 50) ("#DEB542" . 60) ("#F2804F" . 70) ("#F771AC" . 85) ("#F2F2F2" . 100))))
  '(ido-enable-flex-matching t)
@@ -74,6 +52,8 @@
  '(tab-width 2)
  '(warning-minimum-level :error)
  '(zen-mode nil))
+
+(message "setting custom faces...")
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -96,18 +76,7 @@
  '(powerline-inactive2 ((t (:inherit mode-line-inactive :background "#073642" :foreground "#93a1a1"))))
  '(variable-pitch ((t (:family "Lucida Grande")))))
 
-;;; TODO: make these part of customize or figure out how they can interact with Solarized well
-(defun reset-modeline-styles ()
-  (let ((fg (face-attribute 'default :background)))
-    (set-face-attribute 'mode-line nil :background "#c60007" :foreground fg)
-    (set-face-attribute 'powerline-active1 nil :background "#268bd2" :foreground fg)
-    (set-face-attribute 'powerline-active2 nil :background "#b58900" :foreground fg)
-    (set-face-attribute 'mode-line-inactive nil :background "#465a61" :foreground fg)
-    (set-face-attribute 'powerline-inactive1 nil :background "#708183" :foreground fg)
-    (set-face-attribute 'powerline-inactive2 nil :background "#81908f" :foreground fg)
-    (powerline-reset)))
-
-(reset-modeline-styles)
+(message "forcing default face...")
 
 ;;; set the default font face outside Customize so that it sticks when the theme changes
 (set-face-attribute 'default nil :family "Consolas")
@@ -129,6 +98,45 @@
 ;;   (flet ((file-remote-p (&rest) nil))
 ;;     ad-do-it))
 ;; (ad-activate 'hack-dir-local-variables)
+
+;;;; better eval-after-load for mode config
+;; source: http://milkbox.net/note/single-file-master-emacs-configuration/
+
+(defmacro after (mode &rest body)
+  "`eval-after-load' MODE evaluate BODY."
+  (declare (indent defun))
+  `(eval-after-load ,mode
+     '(progn ,@body)))
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
+;;; Solarized is pretty
+(load-theme 'solarized-dark t)
+
+(mapc #'(lambda (libname)
+					(message "loading %s" libname)
+					(load-library libname))
+      '("funcs"
+        "keys"
+        "modes"
+        "my-config"
+        ))
+
+;; not really sure why this doesn't autoload
+(load "ess-site")
+
+;;; TODO: make these part of customize or figure out how they can interact with Solarized well
+(defun reset-modeline-styles ()
+  (let ((fg (face-attribute 'default :background)))
+    (set-face-attribute 'mode-line nil :background "#c60007" :foreground fg)
+    (set-face-attribute 'powerline-active1 nil :background "#268bd2" :foreground fg)
+    (set-face-attribute 'powerline-active2 nil :background "#b58900" :foreground fg)
+    (set-face-attribute 'mode-line-inactive nil :background "#465a61" :foreground fg)
+    (set-face-attribute 'powerline-inactive1 nil :background "#708183" :foreground fg)
+    (set-face-attribute 'powerline-inactive2 nil :background "#81908f" :foreground fg)
+    (powerline-reset)))
+
+(reset-modeline-styles)
 
 ;; server
 (add-hook 'after-init-hook
