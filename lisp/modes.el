@@ -39,8 +39,7 @@
 
 ;;; undo tree
 (require 'undo-tree)
-(define-key undo-tree-map [67108927] nil)
-(global-undo-tree-mode -1)
+(global-undo-tree-mode 1)
 
 ;;; Helm/Projectile
 ; global mode always on, so no lighter
@@ -51,3 +50,9 @@
 (helm-mode 1)
 (projectile-global-mode 1)
 (helm-projectile-on)
+
+(diminish 'auto-complete-mode "")
+(diminish 'ropemacs-mode "")
+(diminish 'yas-minor-mode "")
+(diminish 'magit-auto-revert-mode "")
+(diminish 'undo-tree-mode "")
