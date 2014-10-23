@@ -53,3 +53,5 @@
   (diminish 'undo-tree-mode ""))
 (after 'helm
   (diminish 'helm-mode ""))
+(after 'helm-gtags
+  (diminish 'helm-gtags-mode))

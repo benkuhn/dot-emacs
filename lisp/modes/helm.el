@@ -9,7 +9,9 @@
 
 (defun maybe-gtags-mode ()
   (when (locate-dominating-file default-directory "GTAGS")
-    ;(ggtags-mode)
-    (helm-gtags-mode)))
+    (helm-gtags-mode)
+    (make-local-variable 'helm-projectile-sources-list)
+    (setq helm-projectile-sources-list
+          (append helm-projectile-sources-list '(helm-source-gtags-select)))))
 
 (add-hook 'python-mode-hook 'maybe-gtags-mode)
