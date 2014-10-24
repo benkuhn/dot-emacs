@@ -54,3 +54,4 @@
 ;;; helm etc
 (global-set-key (kbd "C-.") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "s-t") 'helm-projectile)

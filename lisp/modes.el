@@ -41,17 +41,19 @@
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 
-(after 'auto-complete
-  (diminish 'auto-complete-mode ""))
-(after 'ropemacs
-  (diminish 'ropemacs-mode ""))
-(after 'yasnippet
-  (diminish 'yas-minor-mode ""))
-(after 'magit
-  (diminish 'magit-auto-revert-mode ""))
-(after 'undo-tree
-  (diminish 'undo-tree-mode ""))
-(after 'helm
-  (diminish 'helm-mode ""))
-(after 'helm-gtags
-  (diminish 'helm-gtags-mode))
+(defmacro lazy-diminish (mode &optional modename lighter)
+  (unless modename
+    (setq modename (intern (concat (symbol-name mode) "-mode"))))
+  (unless lighter
+    (setq lighter ""))
+  `(after ',mode
+     (diminish ',modename ,lighter)))
+
+(lazy-diminish auto-complete)
+(lazy-diminish ropemacs)
+(lazy-diminish yasnippet yas-minor-mode)
+(lazy-diminish magit magit-auto-revert-mode)
+(lazy-diminish undo-tree)
+(lazy-diminish helm)
+(lazy-diminish helm-gtags)
+(lazy-diminish ggtags)

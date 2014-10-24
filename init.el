@@ -148,3 +148,5 @@
             (require 'yasnippet)
             (message "yas-global-mode...")
             (yas-global-mode 1)))
+
+(message "init succeeded!")
