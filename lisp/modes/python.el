@@ -17,6 +17,8 @@
 
   (add-hook 'python-mode-hook 'my-setup-python)
 
+  (define-key python-mode-map (kbd "M-q") 'python-fill-paragraph)
+  (define-key python-mode-map (kbd "C-c C-c") 'recompile)
+
   (defun my-setup-python ()
-    (add-hook 'before-save-hook 'delete-trailing-whitespace 't 't)
-    (flycheck-mode 1)))
+    (add-hook 'before-save-hook 'delete-trailing-whitespace 't 't)))

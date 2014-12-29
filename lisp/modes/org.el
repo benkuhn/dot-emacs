@@ -79,4 +79,5 @@ If point was already at that position, move point to beginning of line."
   (setq org-agenda-tags-todo-honor-ignore-options t)
   (setq org-enforce-todo-dependencies t)
   (setq org-track-ordered-property-with-tag "seq")
+  (setq org-imenu-depth 4)
   )

@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        LilyPond-save-buffer
         TeX-insert-backslash
         end-of-visual-line
         ess-smart-S-assign
@@ -10,6 +11,7 @@
         ess-yank
         eval-print-last-sexp
         go-mode-insert-and-indent
+        indent-for-tab-command
         kill-visual-line
         my-c-w
         org-agenda-deadline
@@ -30,10 +32,14 @@
         org-shiftmetaright
         org-shiftright
         org-smart-beginning-of-line
+        org-todo
+        python-fill-paragraph
         python-indent-electric-colon
         python-nav-forward-block
         reindent-then-newline-and-indent
+        sgml-slash
         smart-beginning-of-line
+        transpose-words
         yas-expand
         ))
 
@@ -41,6 +47,7 @@
       '(
         beginning-of-buffer
         end-of-buffer
+        helm-projectile
         ido-switch-buffer
         pp-eval-last-sexp
         ))

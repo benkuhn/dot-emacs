@@ -45,7 +45,7 @@
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
  '(projectile-mode-line (quote (:eval (format " (%s)" (projectile-project-name)))))
  '(require-final-newline t)
- '(safe-local-variable-values (quote ((flycheck-python-pylint-executable . "/Users/ben/code/thm/epylint"))))
+ '(safe-local-variable-values (quote ((flycheck-mode . t) (flycheck-pylintrc . "/Users/ben/code/thm/alpha/support/pylint/pylintrc") (eval setq-local compile-command (concat "/Users/ben/code/thm/unittest " buffer-file-name)) (flycheck-python-pylint-executable . "/Users/ben/code/thm/epylint"))))
  '(save-interprogram-paste-before-kill t)
  '(set-mark-command-repeat-pop t)
  '(smooth-scroll-margin 10)
@@ -60,12 +60,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))) t)
- '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))) t)
- '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))) t)
- '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))) t)
- '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))) t)
- '(font-latex-sectioning-5-face ((t (:weight bold))) t)
+ '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))))
+ '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))))
+ '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))))
+ '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))))
+ '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))))
+ '(font-latex-sectioning-5-face ((t (:weight bold))))
  '(linum ((t (:height 80))))
  '(message-cited-text ((t (:foreground "#586e75"))) t)
  '(mode-line ((t (:background "#073642" :foreground "#93a1a1" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))
@@ -111,6 +111,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;;; Solarized is pretty
+(load-theme 'solarized-light t t)
 (load-theme 'solarized-dark t)
 
 (mapc #'(lambda (libname)
@@ -123,18 +124,7 @@
         ))
 
 ;; not really sure why this doesn't autoload
-(load "ess-site")
-
-;;; TODO: make these part of customize or figure out how they can interact with Solarized well
-(defun reset-modeline-styles ()
-  (let ((fg (face-attribute 'default :background)))
-    (set-face-attribute 'mode-line nil :background "#c60007" :foreground fg)
-    (set-face-attribute 'powerline-active1 nil :background "#268bd2" :foreground fg)
-    (set-face-attribute 'powerline-active2 nil :background "#b58900" :foreground fg)
-    (set-face-attribute 'mode-line-inactive nil :background "#465a61" :foreground fg)
-    (set-face-attribute 'powerline-inactive1 nil :background "#708183" :foreground fg)
-    (set-face-attribute 'powerline-inactive2 nil :background "#81908f" :foreground fg)
-    (powerline-reset)))
+;(load "ess-site")
 
 (reset-modeline-styles)
 

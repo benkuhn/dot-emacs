@@ -34,3 +34,6 @@
 
 ;;; completion
 (setq completion-ignored-extensions dired-omit-extensions)
+
+;;; Never split horizontally by default; I like my vertical space
+(setq split-height-threshold nil)
