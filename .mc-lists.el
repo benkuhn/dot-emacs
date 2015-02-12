@@ -3,9 +3,11 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        LilyPond-electric-close-paren
         LilyPond-save-buffer
         TeX-insert-backslash
         end-of-visual-line
+        ess-electric-brace
         ess-smart-S-assign
         ess-smart-comma
         ess-yank

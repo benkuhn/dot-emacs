@@ -3,6 +3,9 @@
   (if (and (> (length fname) 3) (string= (substring fname -3) ".el"))
       (load-library (concat "modes/" fname))))
 
+;;; Emacs Speaks Statistics
+(require 'ess-site)
+
 ;;; nicer filenames
 (require 'uniquify)
 (setq

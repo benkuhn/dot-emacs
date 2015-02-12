@@ -78,8 +78,9 @@ If point was already at that position, move point to beginning of line."
   (interactive)
   (quit-window nil (next-window)))
 
-;; previous window
+;;; previous window function for keybinding
 (defun prev-window ()
+  (interactive)
   (other-window -1))
 
 ;; duplicate line
@@ -118,3 +119,89 @@ If point was already at that position, move point to beginning of line."
 
   ;; put the point in the lowest line and return
   (next-line arg))
+
+;;; Create templates of files
+
+(setq beeminded-files-root "~/Dropbox/Beeminded/")
+
+(defun my-read-file-as-string (path)
+  (with-temp-buffer
+    (insert-file-contents path)
+    (buffer-string)))
+
+(defun new-beeminded-file-from-template (folder)
+  (let* ((filename (format-time-string "%Y-%m-%d"))
+         (folder-path (concat beeminded-files-root folder "/"))
+         (path (concat folder-path filename ".org"))
+         (template (my-read-file-as-string (concat folder-path "TEMPLATE.org")))
+         (bufname (concat "Today's " folder)))
+    (find-file path)
+    (insert template)
+    (save-buffer)
+    (beginning-of-buffer)
+    (next-line)
+    (if (get-buffer bufname)
+        (kill-buffer bufname))
+    (rename-buffer bufname)))
+
+(defun finish-beeminded-file ()
+  ; TODO(ben) perhaps make a Beeminder API call myself? That way no
+  ; Zapier dependency...
+  (interactive)
+  (let* ((bufname (buffer-name))
+         (filename (buffer-file-name))
+         (new-filename (dired-replace-in-string ".org" "-done.org" filename)))
+    (cond ((not (file-in-directory-p filename beeminded-files-root))
+           (message "Buffer isn't beeminded"))
+          ((not (beeminded-file-is-filled-out))
+           (message "Buffer isn't filled out"))
+          ((string-suffix-p "-done.org" filename)
+           (message "Buffer is already done"))
+          (t
+           (save-buffer)
+           (rename-file filename new-filename)
+           (set-visited-file-name new-filename)
+           (set-buffer-modified-p nil)
+           (rename-buffer bufname)
+           (message "Marked as done!")))))
+
+(defun beeminded-file-is-filled-out ()
+  "Check that every heading contains some text"
+  ; TODO(ben) there has GOT to be a better way to write this...
+  (eval `(and . ,(org-map-entries 'beeminded-entry-is-filled-out))))
+
+(defun beeminded-entry-is-filled-out ()
+  "With the cursor at the beginning of an entry, return t if the
+length of the body is > 5, false otherwise"
+  (end-of-line)
+  (let ((pos (point)))
+    (outline-next-heading)
+    (let ((len (- (point) pos)))
+      (> len 5))))
+
+(defun new-daily-review ()
+  (interactive)
+  (new-beeminded-file-from-template "Daily Review"))
+
+(defun new-strategic-review ()
+  (interactive)
+  (new-beeminded-file-from-template "Strategic Review"))
+
+;;; Get rid of fancy chars
+(defun de-fancify-region ()
+  (interactive)
+  (save-excursion
+    (narrow-to-region (point) (mark))
+    (beginning-of-buffer)
+    (replace-string "’" "'")
+    (beginning-of-buffer)
+    (replace-string "‘" "'")
+    (beginning-of-buffer)
+    (replace-string "–" "--")
+    (beginning-of-buffer)
+    (replace-string "“" "\"")
+    (beginning-of-buffer)
+    (replace-string "”" "\"")
+    (beginning-of-buffer)
+    (replace-string "…" "...")
+    (widen)))

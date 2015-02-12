@@ -60,12 +60,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))))
- '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))))
- '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))))
- '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))))
- '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))))
- '(font-latex-sectioning-5-face ((t (:weight bold))))
+ '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-5-face :background "pale turquoise"))) t)
+ '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-5-face :underline t :slant italic))) t)
+ '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-5-face :underline t))) t)
+ '(font-latex-sectioning-3-face ((t (:inherit font-latex-sectioning-5-face :slant italic))) t)
+ '(font-latex-sectioning-4-face ((t (:inherit font-latex-sectioning-5-face))) t)
+ '(font-latex-sectioning-5-face ((t (:weight bold))) t)
+ '(helm-selection ((t (:inherit highlight :overline t :underline t))))
+ '(helm-visible-mark ((t (:inherit region))))
  '(linum ((t (:height 80))))
  '(message-cited-text ((t (:foreground "#586e75"))) t)
  '(mode-line ((t (:background "#073642" :foreground "#93a1a1" :inverse-video nil :box nil :underline nil :slant normal :weight normal))))

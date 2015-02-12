@@ -30,7 +30,12 @@
 (global-set-key (kbd "C-x w") 'count-words)
 ;; I never use open-line, but use other-window a lot
 (global-set-key (kbd "C-o") 'other-window)
-(global-set-key (kbd "C-O") 'other-window)
+;; Better window movement (these keys are currently undefined)
+(global-set-key (kbd "s-<left>") 'windmove-left)
+(global-set-key (kbd "s-<right>") 'windmove-right)
+(global-set-key (kbd "s-<up>") 'windmove-up)
+(global-set-key (kbd "s-<down>") 'windmove-down)
+
 (global-unset-key (kbd "C-x o")) ;; hack to break old habit
 
 ;;; program shortcuts
@@ -55,3 +60,12 @@
 (global-set-key (kbd "C-.") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "s-t") 'helm-projectile)
+
+;;; Beeminded files
+(global-unset-key (kbd "C-x C-b"))
+(global-set-key (kbd "C-x C-b C-d") 'new-daily-review)
+(global-set-key (kbd "C-x C-b C-s") 'new-strategic-review)
+(global-set-key (kbd "C-x C-b C-f") 'finish-beeminded-file)
+
+;;; Fullscreen. This is C-s-f, dunno why emacs doesn't like that syntax
+(global-set-key (kbd "<C-s-268632070>") 'toggle-frame-fullscreen)
