@@ -37,3 +37,10 @@
 
 ;;; Never split horizontally by default; I like my vertical space
 (setq split-height-threshold nil)
+
+;;; Graphical dialogs crash emacs, God only knows why
+; Source: http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
+(defadvice y-or-n-p (around prevent-dialog-yorn activate)
+  "Prevent y-or-n-p from activating a dialog"
+  (let ((use-dialog-box nil))
+    ad-do-it))

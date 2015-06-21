@@ -135,14 +135,17 @@ If point was already at that position, move point to beginning of line."
          (path (concat folder-path filename ".org"))
          (template (my-read-file-as-string (concat folder-path "TEMPLATE.org")))
          (bufname (concat "Today's " folder)))
-    (find-file path)
-    (insert template)
-    (save-buffer)
-    (beginning-of-buffer)
-    (next-line)
     (if (get-buffer bufname)
-        (kill-buffer bufname))
-    (rename-buffer bufname)))
+        (progn
+          (switch-to-buffer bufname)
+          (message "Buffer already exists; did you mean to call finish-beeminded-file instead?"))
+      (progn
+        (find-file path)
+        (insert template)
+        (save-buffer)
+        (beginning-of-buffer)
+        (next-line)
+        (rename-buffer bufname)))))
 
 (defun finish-beeminded-file ()
   ; TODO(ben) perhaps make a Beeminder API call myself? That way no
@@ -192,6 +195,8 @@ length of the body is > 5, false otherwise"
   (interactive)
   (save-excursion
     (narrow-to-region (point) (mark))
+    (beginning-of-buffer)
+    (replace-string "—" "--")
     (beginning-of-buffer)
     (replace-string "’" "'")
     (beginning-of-buffer)

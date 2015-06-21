@@ -35,6 +35,7 @@
         org-shiftright
         org-smart-beginning-of-line
         org-todo
+        org-yank
         python-fill-paragraph
         python-indent-electric-colon
         python-nav-forward-block
@@ -49,7 +50,9 @@
       '(
         beginning-of-buffer
         end-of-buffer
+        helm-M-x
         helm-projectile
         ido-switch-buffer
         pp-eval-last-sexp
+        undo-tree-visualizer-quit
         ))

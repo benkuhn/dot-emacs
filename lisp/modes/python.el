@@ -9,7 +9,7 @@
 
   ;; Rope mode... see http://milkbox.net/note/installing-pymacs-rope-on-emacs-24/
   (require 'pymacs)
-  (pymacs-load "ropemacs" "rope-")
+  ; (pymacs-load "ropemacs" "rope-")
 
   (after 'ropemacs
   ; conflicts with my help shortcut and I don't use it anyway

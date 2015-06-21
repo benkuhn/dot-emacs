@@ -11,3 +11,6 @@
               (minibufferp))
     (linum-mode 1)))
 
+(defun linum-format-func (line)
+  (propertize (format "%3d" line) 'face 'linum))
+(setq linum-format 'linum-format-func)
