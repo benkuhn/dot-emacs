@@ -1,6 +1,9 @@
 ;;; TODO: make these part of customize or figure out how they can
 ;;; interact with Solarized well
 
+(load-theme 'solarized-light t t)
+(load-theme 'solarized-dark t)
+
 (require 'powerline)
 (powerline-default-theme)
 

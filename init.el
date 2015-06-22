@@ -116,21 +116,18 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
-;;; Solarized is pretty
-(load-theme 'solarized-light t t)
-(load-theme 'solarized-dark t)
+(defun load-library-from-init (libname)
+  (message "loading %s" libname)
+  (condition-case nil
+      (load-library libname)
+    (error (message "Error loading %s" libname))))
 
-(mapc #'(lambda (libname)
-					(message "loading %s" libname)
-					(load-library libname))
+(mapc #'load-library-from-init
       '("funcs"
         "keys"
         "modes"
         "my-config"
         ))
-
-;; not really sure why this doesn't autoload
-;(load "ess-site")
 
 (reset-modeline-styles)
 

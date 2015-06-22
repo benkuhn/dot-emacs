@@ -1,7 +1,7 @@
 ;;; load everything in the modes/ directory
 (dolist (fname (directory-files "~/.emacs.d/lisp/modes"))
   (if (and (> (length fname) 3) (string= (substring fname -3) ".el"))
-      (load-library (concat "modes/" fname))))
+      (load-library-from-init (concat "modes/" fname))))
 
 ;;; Emacs Speaks Statistics
 (require 'ess-site)
