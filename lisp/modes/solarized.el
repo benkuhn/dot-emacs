@@ -1,8 +1,10 @@
 ;;; TODO: make these part of customize or figure out how they can
 ;;; interact with Solarized well
 
-(load-theme 'solarized-light t t)
-(load-theme 'solarized-dark t)
+(load-theme 'ben-solarized-dark t)
+
+;(load-theme 'solarized-light t t)
+;(load-theme 'solarized-dark t)
 
 (require 'powerline)
 (powerline-default-theme)
@@ -42,9 +44,10 @@
     (set-face-attribute 'powerline-active2 nil   :background my-solarized-base02 :foreground fg2)
     (set-face-attribute 'mode-line-inactive nil  :background my-solarized-base02 :foreground fg2)
     (set-face-attribute 'powerline-inactive1 nil :background my-solarized-base03 :foreground fg2)
-    (set-face-attribute 'powerline-inactive2 nil :background my-solarized-base03 :foreground fg2)
+    (set-face-attribute 'powerline-inactive2 nil :background my-solarized-base03 :foreground my-solarized-base0)
     (powerline-reset)
     nil))
+
 
 (reset-modeline-styles)
 
