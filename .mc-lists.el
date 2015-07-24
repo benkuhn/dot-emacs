@@ -6,6 +6,7 @@
         LilyPond-electric-close-paren
         LilyPond-save-buffer
         TeX-insert-backslash
+        electric-newline-and-maybe-indent
         end-of-visual-line
         ess-electric-brace
         ess-smart-S-assign
