@@ -37,6 +37,9 @@
 (global-set-key (kbd "s-<down>") 'windmove-down)
 
 (global-unset-key (kbd "C-x o")) ;; hack to break old habit
+;; Some of the help functions are crazy slow and I only ever hit them by accident
+(define-key help-map (kbd "h") nil)
+(define-key help-map (kbd "s") nil)
 
 ;;; program shortcuts
 (global-set-key (kbd "C-x C-4") 'mu4e)
