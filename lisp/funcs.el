@@ -210,3 +210,9 @@ length of the body is > 5, false otherwise"
     (beginning-of-buffer)
     (replace-string "…" "...")
     (widen)))
+
+(defmacro defmyhook (hookname &rest body)
+  (let ((funcname (make-symbol (concat "bsk/" (symbol-name hookname)))))
+  `(progn
+     (defun ,funcname () ,@body)
+     (add-hook ',hookname ',funcname))))

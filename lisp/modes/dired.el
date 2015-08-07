@@ -1,9 +1,8 @@
 ;;; nicer dired
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (require 'dired-x)
-            (dired-omit-mode 1)
-            ))
+(defmyhook dired-mode-hook
+  (require 'dired-x)
+  (dired-omit-mode 1))
+
 (setq dired-guess-shell-alist-default nil)
 ;; Don't show junk in dired
 (setq dired-omit-extensions
