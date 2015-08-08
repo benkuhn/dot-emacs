@@ -30,6 +30,9 @@
 (global-set-key (kbd "C-x w") 'count-words)
 ;; I never use open-line, but use other-window a lot
 (global-set-key (kbd "C-o") 'other-window)
+(after 'dired
+  (define-key dired-mode-map (kbd "C-o") 'other-window))
+
 ;; Better window movement (these keys are currently undefined)
 (global-set-key (kbd "s-<left>") 'windmove-left)
 (global-set-key (kbd "s-<right>") 'windmove-right)
