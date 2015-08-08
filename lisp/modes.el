@@ -55,7 +55,6 @@
 (lazy-diminish auto-complete)
 (lazy-diminish ropemacs)
 (lazy-diminish yasnippet yas-minor-mode)
-(lazy-diminish magit magit-auto-revert-mode)
 (lazy-diminish undo-tree)
 (lazy-diminish helm)
 (lazy-diminish helm-gtags)
