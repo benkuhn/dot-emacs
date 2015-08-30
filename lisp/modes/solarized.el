@@ -37,6 +37,7 @@
   :group 'bsk-eshell-prompt)
 
 (defun reset-modeline-styles ()
+  (interactive)
   (let ((fg  (face-attribute 'default :background))
         (fg2 (face-attribute 'default :foreground)))
     (set-face-attribute 'mode-line nil           :background my-solarized-yellow :foreground fg)
@@ -48,6 +49,7 @@
     (powerline-reset)
     nil))
 
+(setq powerline-default-separator 'utf-8)
 
 (reset-modeline-styles)
 
