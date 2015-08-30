@@ -122,7 +122,7 @@ If point was already at that position, move point to beginning of line."
 
 ;;; Create templates of files
 
-(setq beeminded-files-root "~/Dropbox/Beeminded/")
+(setq beeminded-files-root "~/Dropbox (Personal)/Beeminded/")
 
 (defun my-read-file-as-string (path)
   (with-temp-buffer

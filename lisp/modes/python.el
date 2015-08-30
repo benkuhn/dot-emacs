@@ -21,4 +21,5 @@
   (define-key python-mode-map (kbd "C-c C-c") 'recompile)
 
   (defun my-setup-python ()
-    (add-hook 'before-save-hook 'delete-trailing-whitespace 't 't)))
+    ;(add-hook 'before-save-hook 'delete-trailing-whitespace 't 't)
+    ))
