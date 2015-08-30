@@ -42,6 +42,7 @@
         python-nav-forward-block
         reindent-then-newline-and-indent
         sgml-slash
+        sh-assignment
         smart-beginning-of-line
         transpose-words
         yas-expand

@@ -210,6 +210,6 @@
    '(undo-tree-visualizer-register-face ((t (:foreground "#b58900"))))
    '(which-func ((t (:foreground "#859900"))))
    '(yas-field-highlight-face ((t (:inherit secondary-selection))))
-   '(default ((t (:background "#002b36" :foreground "#839496" :height 110 :family "Consolas"))))))
+   '(default ((t (:background "#002b36" :foreground "#839496" :height 110 :family "Powerline Consolas"))))))
 
 (provide-theme 'ben-solarized-dark)
