@@ -51,6 +51,7 @@
 (setq mc/cmds-to-run-once
       '(
         beginning-of-buffer
+        delete-window
         end-of-buffer
         helm-M-x
         helm-projectile
