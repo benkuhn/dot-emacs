@@ -32,6 +32,9 @@
 (global-set-key (kbd "C-o") 'other-window)
 (after 'dired
   (define-key dired-mode-map (kbd "C-o") 'other-window))
+(after 'ggtags
+  (define-key ggtags-global-mode-map (kbd "C-o") 'other-window)
+  (define-key ggtags-global-mode-map (kbd "o") 'compilation-display-error))
 
 ;; Better window movement (these keys are currently undefined)
 (global-set-key (kbd "s-<left>") 'windmove-left)
