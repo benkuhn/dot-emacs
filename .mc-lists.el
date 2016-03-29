@@ -45,6 +45,8 @@
         sh-assignment
         smart-beginning-of-line
         transpose-words
+        yaml-electric-dash-and-dot
+        yank-pop-forwards
         yas-expand
         ))
 

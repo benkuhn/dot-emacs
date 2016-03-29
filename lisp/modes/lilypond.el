@@ -1,4 +1,4 @@
-(setq my-ly-mode-directory "/Users/ben/apps/LilyPond.app/Contents/Resources/share/emacs/site-lisp")
+(setq my-ly-mode-directory "/Applications/LilyPond.app/Contents/Resources/share/emacs/site-lisp")
 
 (if (file-exists-p my-ly-mode-directory)
     (add-to-list 'load-path my-ly-mode-directory))

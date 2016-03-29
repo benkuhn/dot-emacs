@@ -109,11 +109,10 @@
  '(require-final-newline t)
  '(safe-local-variable-values
    (quote
-    ((flycheck-mode . t)
-     (flycheck-pylintrc . "/Users/ben/code/thm/alpha/support/pylint/pylintrc")
-     (eval setq-local compile-command
-           (concat "/Users/ben/code/thm/unittest " buffer-file-name))
-     (flycheck-python-pylint-executable . "/Users/ben/code/thm/epylint"))))
+    ((flycheck-pylint-use-symbolic-id quote t)
+     (flycheck-mode . t)
+     (flycheck-pylintrc . "/Users/ben/wave/remit-srv/pylintrc")
+     (flycheck-python-pylint-executable . "/Users/ben/bin/wave-pylint"))))
  '(save-interprogram-paste-before-kill t)
  '(set-mark-command-repeat-pop t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
