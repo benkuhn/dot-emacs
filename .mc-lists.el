@@ -6,6 +6,7 @@
         LilyPond-electric-close-paren
         LilyPond-save-buffer
         TeX-insert-backslash
+        downcase-region
         electric-newline-and-maybe-indent
         end-of-visual-line
         ess-electric-brace
@@ -14,6 +15,7 @@
         ess-yank
         eval-print-last-sexp
         go-mode-insert-and-indent
+        haml-electric-backspace
         indent-for-tab-command
         kill-visual-line
         my-c-w
@@ -58,6 +60,7 @@
         helm-M-x
         helm-projectile
         ido-switch-buffer
+        magit-status
         pp-eval-last-sexp
         undo-tree-visualizer-quit
         ))
